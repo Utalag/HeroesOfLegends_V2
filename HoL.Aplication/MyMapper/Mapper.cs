@@ -30,7 +30,6 @@ namespace HoL.Aplication.MyMapper
             Map_SpecialAbilities();
             Map_Weapon();
             Map_FightingSpirit();
-            Map_VulnerabilityProfil();
             
             // Anatomy
             Map_AnatomyProfile();
@@ -80,11 +79,6 @@ namespace HoL.Aplication.MyMapper
             CreateMap<FightingSpiritDto, FightingSpirit>();
         }
 
-        private void Map_VulnerabilityProfil()
-        {
-            CreateMap<VulnerabilityProfil, VulnerabilityProfilDto>();
-            CreateMap<VulnerabilityProfilDto, VulnerabilityProfil>();
-        }
 
         // === Anatomy Mapping ===
         

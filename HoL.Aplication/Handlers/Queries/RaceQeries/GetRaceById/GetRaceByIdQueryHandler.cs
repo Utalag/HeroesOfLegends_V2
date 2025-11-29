@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using HoL.Aplication.DTOs.EntitiDtos;
+﻿using HoL.Aplication.DTOs.EntitiDtos;
+using HoL.Aplication.Handlers.Queries.GenericQueryes;
 using HoL.Aplication.Interfaces.IRerpositories;
-using MediatR;
-using Microsoft.Extensions.Logging;
+using HoL.Domain.Entities;
 
 namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceById
 {
@@ -29,7 +25,9 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceById
     /// <seealso cref="GetRaceByIdQuery"/>
     /// <seealso cref="GetRaceByIdQueryValidator"/>
     /// <seealso cref="IRaceRepository"/>
-    public class GetRaceByIdQueryHandler : IRequestHandler<GetRaceByIdQuery, RaceDto?>
+    public class GetRaceByIdQueryHandler
+        : GenericIdQueryHandler<Race, RaceDto, IRaceRepository>,
+        IRequestHandler<GetRaceByIdQuery, RaceDto?>
     {
         private readonly IRaceRepository _raceRepository;
         private readonly IMapper _mapper;
@@ -42,10 +40,10 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceById
         /// <param name="mapper">AutoMapper instance pro mapování entity na DTO</param>
         /// <param name="logger">Logger pro zaznamenávání operací</param>
         /// <exception cref="ArgumentNullException">Pokud některý z parametrů je null</exception>
-        public GetRaceByIdQueryHandler(
-            IRaceRepository raceRepository,
-            IMapper mapper,
-            ILogger<GetRaceByIdQueryHandler> logger)
+        public GetRaceByIdQueryHandler(IRaceRepository raceRepository,
+                                       IMapper mapper,
+                                       ILogger<GetRaceByIdQueryHandler> logger)
+                : base(raceRepository, mapper, logger, (repo, id, ct) => repo.GetByIdAsync(id, ct))
         {
             _raceRepository = raceRepository ?? throw new ArgumentNullException(nameof(raceRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -55,7 +53,7 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceById
         /// <summary>
         /// Zpracuje query pro získání rasy podle ID.
         /// </summary>
-        /// <param name="request">Query s ID rasy</param>
+        /// <param name="request">Id reqest</param>
         /// <param name="cancellationToken">Token pro zrušení operace</param>
         /// <returns>
         /// <see cref="RaceDto"/> pokud rasa existuje, jinak <c>null</c>.
@@ -66,38 +64,39 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceById
         /// <exception cref="DbException">Pokud dojde k chybě při čtení z databáze</exception>
         public async Task<RaceDto?> Handle(GetRaceByIdQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Querying Race with Id: {RaceId}", request.Id);
+
+            return await HandleGetById(request.Id, cancellationToken,nameof(GetRaceByIdQueryHandler));
+
+
+            #region alt explcit code
+            /*_logger.LogInformation("Querying Race with Id: {RaceId}", request.Id);
 
             try
             {
                 // Načtení entity z databáze
-                var raceEntity = await _raceRepository.GetByIdAsync(request.Id, cancellationToken);
+                var race = await _raceRepository.GetByIdAsync(request.Id, cancellationToken);
 
-                if (raceEntity == null)
+                // Ošetření nenalezeného výsledku
+                if (race == null)
                 {
                     _logger.LogWarning("Race with Id: {RaceId} not found", request.Id);
                     return null;
                 }
-
                 // Mapování na DTO
-                var raceDto = _mapper.Map<RaceDto>(raceEntity);
+                var raceDto = _mapper.Map<RaceDto>(race);
 
-                _logger.LogInformation(
-                    "Race found - Id: {RaceId}, Name: {RaceName}, Category: {RaceCategory}",
-                    raceDto.RaceId,
-                    raceDto.RaceName,
-                    raceDto.RaceCategory);
-
+                // Logování nalezené entity
+                _logger.LogInformation("Race found - {raceDto}", raceDto);
                 return raceDto;
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    ex,
-                    "Error querying Race with Id: {RaceId}",
-                    request.Id);
+                _logger.LogError(ex, "Error querying Race with Id: {RaceId}", request.Id);
                 throw; // Re-throw pro vyšší vrstvy (např. API middleware)
             }
+            */
+            #endregion
         }
     }
 }
+

@@ -31,16 +31,16 @@ namespace HoL.Aplication.Handlers.Commands.RaceCommand.RemoveRace
 
             try
             {
-                var existingRace = await _repository.GetByIdAsync(request.RaceDto.RaceId, cancellationToken);
+                var existingRace = await _repository.ExistsAsync(request.RaceDto.RaceId, cancellationToken);
 
-                if (existingRace == null)
+                if (existingRace)
                 {
                     _logger.LogInformation("Race with Id is yet Removed: {RaceId}, Name: {RaceName}",
                         request.RaceDto.RaceId, request.RaceDto.RaceName);
                     return true;
                 }
                 // removed
-                await _repository.DeleteAsync(existingRace.RaceId, cancellationToken);
+                await _repository.DeleteAsync(request.RaceDto.RaceId,cancellationToken);
                 _logger.LogInformation("Race with Id is Removed: {RaceId}, Name: {RaceName}",
                         request.RaceDto.RaceId, request.RaceDto.RaceName);
                 return true;

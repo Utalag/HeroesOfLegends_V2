@@ -117,10 +117,7 @@ namespace HoL.Aplication.Validators.EntitiValidators
                 .WithMessage("Treasure cannot be null")
                 .SetValidator(new CurrencyDtoValidator()!);
 
-            RuleFor(x => x.Vulnerability)
-                .NotNull()
-                .WithMessage("Vulnerability profile cannot be null")
-                .SetValidator(new VulnerabilityProfilDtoValidator()!);
+            
 
             RuleFor(x => x.FightingSpirit)
                 .NotNull()

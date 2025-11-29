@@ -1,7 +1,9 @@
 ﻿using HoL.Aplication.DTOs;
 using HoL.Domain.Entities;
+using HoL.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -51,5 +53,12 @@ namespace HoL.Aplication.Interfaces.IRerpositories
         /// Volitelně: najde rasu podle názvu (užitečné pro validaci duplicit před vytvořením).
         /// </summary>
         Task<Race?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
+
+        Task<IEnumerable<Race>> GetBySeqencAsync(
+            int Page=1,
+            int Size=5,
+            string ?SortBy = default,
+            SortDirection SortDir = SortDirection.Original, 
+            CancellationToken cancellationToken = default);
     }
 }

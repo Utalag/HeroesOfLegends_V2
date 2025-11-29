@@ -1,4 +1,4 @@
-using HoL.Aplication.Interfaces.IRerpositories;
+﻿using HoL.Aplication.Interfaces.IRerpositories;
 using HoL.Domain.Entities;
 
 namespace HeroesOfLegends.Application.Handlers.Commands.RaceCommand.CreatedRace
@@ -10,7 +10,7 @@ namespace HeroesOfLegends.Application.Handlers.Commands.RaceCommand.CreatedRace
         private readonly IMapper _mapper;
 
         public CreatedRaceHandler(
-            IRaceRepository repository, 
+            IRaceRepository repository,
             ILogger<CreatedRaceHandler> logger,
             IMapper mapper)
         {

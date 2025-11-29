@@ -40,9 +40,9 @@ namespace HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace
             try
             {
                 // 1. Kontrola existence entity v databázi
-                var existingRace = await _repository.GetByIdAsync(request.RaceDto.RaceId, cancellationToken);
+                var existingRace= await _repository.ExistsAsync(request.RaceDto.RaceId, cancellationToken);
 
-                if (existingRace == null)
+                if (existingRace)
                 {
                     _logger.LogWarning(
                         "Race with Id: {RaceId} not found for update",
@@ -70,11 +70,6 @@ namespace HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace
                     domain.RaceCategory);
 
                 return domain.RaceId;
-            }
-            catch (KeyNotFoundException)
-            {
-                // Re-throw známé výjimky bez logování (už zalogováno výše)
-                throw;
             }
             catch (Exception ex)
             {
