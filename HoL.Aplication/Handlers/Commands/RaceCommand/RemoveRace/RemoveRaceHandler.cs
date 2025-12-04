@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using HeroesOfLegends.Application.Handlers.Commands.RaceCommand.CreatedRace;
+﻿using HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace;
 using HoL.Aplication.Interfaces.IRerpositories;
-using HoL.Domain.Entities;
-using MediatR;
-using Microsoft.Extensions.Logging;
+using HoL.Domain.LogMessages;
 
 namespace HoL.Aplication.Handlers.Commands.RaceCommand.RemoveRace
 {
@@ -23,38 +20,52 @@ namespace HoL.Aplication.Handlers.Commands.RaceCommand.RemoveRace
 
         public async Task<bool> Handle(RemoveRaceCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation(
-                "Remove Race with Id: {RaceId}, Name: {RaceName}, Category: {RaceCategory}",
-                request.RaceDto.RaceId,
-                request.RaceDto.RaceName,
-                request.RaceDto.RaceCategory);
+            _logger.LogInformation(LogMessageTemplates.Deleting.DeletingEntityInfo(
+                nameof(RemoveRaceHandler),
+                request.RaceDto.GetType().Name,
+                request.RaceDto.RaceId));
 
             try
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var existingRace = await _repository.ExistsAsync(request.RaceDto.RaceId, cancellationToken);
 
                 if (existingRace)
                 {
-                    _logger.LogInformation("Race with Id is yet Removed: {RaceId}, Name: {RaceName}",
-                        request.RaceDto.RaceId, request.RaceDto.RaceName);
+                    _logger.LogInformation(LogMessageTemplates.Deleting.EntityNotFoundForDeletion(
+                        nameof(RemoveRaceHandler),
+                        request.RaceDto.GetType().Name,
+                        request.RaceDto.RaceId));
+
                     return true;
                 }
                 // removed
-                await _repository.DeleteAsync(request.RaceDto.RaceId,cancellationToken);
-                _logger.LogInformation("Race with Id is Removed: {RaceId}, Name: {RaceName}",
-                        request.RaceDto.RaceId, request.RaceDto.RaceName);
+                await _repository.DeleteAsync(request.RaceDto.RaceId, cancellationToken);
+                _logger.LogInformation(LogMessageTemplates.Deleting.EntityDeletedSuccessfully(
+                    nameof(RemoveRaceHandler),
+                        request.RaceDto.GetType().Name,
+                        request.RaceDto.RaceId));
                 return true;
 
             }
+            catch (OperationCanceledException)
+            {
+                _logger.LogWarning(
+                    LogMessageTemplates.Exceptions.OperationCanceledWithId(
+                        nameof(UpdatedRaceHandler),
+                        request.RaceDto.GetType().Name,
+                        request.RaceDto.RaceId));
+                throw;
+            }
             catch (Exception ex)
             {
-                // Logování neočekávaných chyb
                 _logger.LogError(
-                    ex,
-                    "Error removed Race with Id: {RaceId}, Name: {RaceName}",
-                    request.RaceDto.RaceId,
-                    request.RaceDto.RaceName);
-                throw; // Re-throw pro vyšší vrstvy (např. API middleware)
+                    LogMessageTemplates.Exceptions.UnexpectedErrorWithId(
+                        nameof(UpdatedRaceHandler),
+                        request.RaceDto.GetType().Name,
+                        request.RaceDto.RaceId,
+                        ex));
+                throw;
             }
         }
     }

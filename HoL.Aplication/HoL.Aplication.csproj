@@ -8,15 +8,15 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="16.0.0-beta-1" />
+    <PackageReference Include="AutoMapper" Version="16.0.0" />
     <PackageReference Include="AutoMapper.Collection" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Collection.EntityFramework" Version="12.0.0" />
-    <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="11.0.0" />
+    <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.EnumMapping" Version="5.0.0" />
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="9.0.1" />
-    <PackageReference Include="FluentValidation" Version="12.1.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.0" />
-    <PackageReference Include="MediatR" Version="14.0.0-beta-1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="MediatR" Version="14.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\IDtos\IValueObjectsDtos\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="LogHelpers\LogInterfaces\IQueriesLog\ILogSingleId.cs" />
   </ItemGroup>
 
 </Project>

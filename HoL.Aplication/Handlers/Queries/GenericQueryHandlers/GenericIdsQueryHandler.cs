@@ -1,4 +1,4 @@
-using HoL.Aplication.LogHelpers;
+using HoL.Domain.LogMessages;
 
 namespace HoL.Aplication.Handlers.Queries.GenericQueryes
 {
@@ -8,47 +8,6 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
     /// <typeparam name="TEntity">Typ domain entity (např. Race, Character)</typeparam>
     /// <typeparam name="TDto">Typ DTO pro výstup (např. RaceDto, CharacterDto)</typeparam>
     /// <typeparam name="TRepository">Typ repository implementující základní CRUD operace</typeparam>
-    /// <remarks>
-    /// <para>
-    /// Handler provádí:
-    /// <list type="number">
-    /// <item><description>Validace a normalizace vstupní kolekce ID (odstranění duplikátů, filtrování nevalidních hodnot)</description></item>
-    /// <item><description>Iterativní načtení entit z repository s podporou cancellation</description></item>
-    /// <item><description>Mapování nalezených entit na DTO</description></item>
-    /// <item><description>Logování průběhu operace a výsledků</description></item>
-    /// </list>
-    /// </para>
-    /// <para>
-    /// <strong>Normalizace vstupů:</strong>
-    /// <list type="bullet">
-    /// <item>Odstranění ID menších nebo rovných 0</item>
-    /// <item>Odstranění duplicitních ID</item>
-    /// <item>Zachování pořadí prvního výskytu každého ID</item>
-    /// </list>
-    /// </para>
-    /// <para>
-    /// Handler loguje všechny operace včetně:
-    /// - Počet surových vs. normalizovaných ID
-    /// - Nenalezené entity (jako warning)
-    /// - Finální počet vrácených výsledků
-    /// </para>
-    /// </remarks>
-    /// <example>
-    /// Použití pro Race entity:
-    /// <code>
-    /// public class GetRacesByIdsQueryHandler 
-    ///     : GenericGetByIdsQueryHandler&lt;Race, RaceDto, IRaceRepository&gt;
-    /// {
-    ///     public GetRacesByIdsQueryHandler(
-    ///         IRaceRepository repository, 
-    ///         IMapper mapper, 
-    ///         ILogger&lt;GetRacesByIdsQueryHandler&gt; logger)
-    ///         : base(repository, mapper, logger, (repo, id, ct) => repo.GetByIdAsync(id, ct))
-    ///     {
-    ///     }
-    /// }
-    /// </code>
-    /// </example>
     public abstract class GenericIdsQueryHandler<TEntity, TDto, TRepository>
         where TEntity : class
         where TDto : class
@@ -58,13 +17,14 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly Func<TRepository, int, CancellationToken, Task<TEntity?>> _getByIdFunc;
+        private readonly string _entityName;
 
         /// <summary>
         /// Inicializuje novou instanci generického handleru.
         /// </summary>
         /// <param name="repository">Repository implementující GetByIdAsync metodu</param>
         /// <param name="mapper">AutoMapper instance pro mapování entity na DTO</param>
-        /// <param name="logger">Logger pro zaznamenávání operací</param>
+        /// <param name="logger">Logger pro zaznamování operací</param>
         /// <param name="getByIdFunc">Delegát pro volání GetByIdAsync na konkrétním repository</param>
         /// <exception cref="ArgumentNullException">Pokud některý z parametrů je null</exception>
         protected GenericIdsQueryHandler(
@@ -77,6 +37,7 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _getByIdFunc = getByIdFunc ?? throw new ArgumentNullException(nameof(getByIdFunc));
+            _entityName = typeof(TEntity).Name;
         }
 
         /// <summary>
@@ -97,11 +58,9 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
             CancellationToken cancellationToken,
             string handlerName)
         {
-            ILogMultipleIds logHelper = new LogHelpers<TEntity>(_logger, handlerName);
-
             if (ids is null)
             {
-                logHelper.LogNullIdsCollection();
+                _logger.LogWarning(LogMessageTemplates.GetByIds.NullIdsCollection(handlerName));
                 return Enumerable.Empty<TDto>();
             }
 
@@ -112,13 +71,13 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
 
             if (!normalizedIds.Any())
             {
-                logHelper.LogNoValidIds();
+                _logger.LogWarning(LogMessageTemplates.GetByIds.NullIdsCollection(handlerName));
                 return Enumerable.Empty<TDto>();
             }
 
-            logHelper.LogProcessingIds(ids.Count(),
-                                       normalizedIds.Count,
-                                       normalizedIds);
+            _logger.LogInformation(
+                LogMessageTemplates.GetByIds.ProcessingIds(handlerName, ids.Count(), normalizedIds.Count, string.Join(", ", normalizedIds))
+            );
 
             var foundEntities = new List<TEntity>(normalizedIds.Count);
 
@@ -131,7 +90,7 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
                     var entity = await _getByIdFunc(_repository, id, cancellationToken);
                     if (entity is null)
                     {
-                        logHelper.LogEntityNotFound(id);
+                        _logger.LogWarning(LogMessageTemplates.GetById.EntityNotFound(handlerName, _entityName, id));
                         continue;
                     }
 
@@ -140,24 +99,26 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
             }
             catch (OperationCanceledException)
             {
-                logHelper.LogOperationCanceled();
+                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceled(handlerName));
                 throw;
             }
             catch (Exception ex)
             {
-                logHelper.LogUnexpectedError(ex);
+                _logger.LogError(LogMessageTemplates.Exceptions.UnexpectedError(handlerName, _entityName, ex));
                 throw;
             }
 
             if (foundEntities.Count == 0)
             {
-                logHelper.LogNoEntitiesFound();
+                _logger.LogInformation(LogMessageTemplates.GetByIds.NoEntitiesFound(handlerName, _entityName));
                 return Enumerable.Empty<TDto>();
             }
 
             var dtoList = _mapper.Map<List<TDto>>(foundEntities);
 
-            logHelper.LogQueryCompleted(normalizedIds.Count, dtoList.Count);
+            _logger.LogInformation(
+                LogMessageTemplates.GetByIds.QueryCompleted(handlerName, normalizedIds.Count, dtoList.Count)
+            );
 
             return dtoList;
         }

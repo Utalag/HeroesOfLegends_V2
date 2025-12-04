@@ -1,5 +1,4 @@
-﻿using HoL.Aplication.LogHelpers;
-using HoL.Aplication.LogHelpers.LogInterfaces.IQueriesLog;
+﻿using HoL.Domain.LogMessages;
 
 namespace HoL.Aplication.Handlers.Queries.GenericQueryes
 {
@@ -41,7 +40,7 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
     ///     
     ///     public async Task&lt;RaceDto?&gt; Handle(GetRaceByIdQuery request, CancellationToken cancellationToken)
     ///     {
-    ///         return await HandleGetById(request.Id, cancellationToken);
+    ///         return await HandleGetById(request.Id, cancellationToken, nameof(GetRaceByIdQueryHandler));
     ///     }
     /// }
     /// </code>
@@ -55,6 +54,7 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly Func<TRepository, int, CancellationToken, Task<TEntity?>> _getByIdFunc;
+        private readonly string _entityName;
 
         /// <summary>
         /// Inicializuje novou instanci generického handleru.
@@ -73,6 +73,7 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _getByIdFunc = getByIdFunc ?? throw new ArgumentNullException(nameof(getByIdFunc));
+            _entityName = typeof(TEntity).Name;
         }
 
         /// <summary>
@@ -80,6 +81,7 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
         /// </summary>
         /// <param name="id">ID entity k načtení (musí být > 0)</param>
         /// <param name="cancellationToken">Token pro zrušení operace</param>
+        /// <param name="handlerName">Název handleru pro logování</param>
         /// <returns>
         /// DTO entity pokud nalezena, jinak <c>null</c>.
         /// </returns>
@@ -89,20 +91,15 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
         /// </remarks>
         /// <exception cref="OperationCanceledException">Pokud byla operace zrušena</exception>
         /// <exception cref="Exception">Pokud dojde k neočekávané chybě při načítání dat</exception>
-        protected async Task<TDto?> HandleGetById(int id,CancellationToken cancellationToken, string handlerName)
+        protected async Task<TDto?> HandleGetById(int id, CancellationToken cancellationToken, string handlerName)
         {
-            ILogSingleId logHelper = new LogHelpers<TEntity>(_logger, handlerName);
-            
-
-         
-
             if (id < 1)
             {
-                logHelper.LogInvalidId(id);
+                _logger.LogWarning(LogMessageTemplates.GetById.InvalidId(handlerName, id));
                 return null;
             }
 
-            logHelper.LogRetrievingEntity(id);
+            _logger.LogInformation(LogMessageTemplates.GetById.LookingForEntityById(handlerName, _entityName, id));
 
             try
             {
@@ -112,23 +109,23 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
 
                 if (entity is null)
                 {
-                    logHelper.LogEntityNotFound(id);
+                    _logger.LogWarning(LogMessageTemplates.GetById.EntityNotFound(handlerName, _entityName, id));
                     return null;
                 }
 
                 var dto = _mapper.Map<TDto>(entity);
 
-                logHelper.LogEntityRetrievedSuccessfully(id);
+                _logger.LogInformation(LogMessageTemplates.GetById.EntityRetrievedSuccessfully(handlerName, _entityName, id));
                 return dto;
             }
             catch (OperationCanceledException)
             {
-                logHelper.LogOperationCanceled(id);
+                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceledWithId(handlerName, _entityName, id));
                 throw;
             }
             catch (Exception ex)
             {
-                logHelper.LogUnexpectedError(ex, id);
+                _logger.LogError(ex, LogMessageTemplates.Exceptions.UnexpectedErrorWithId(handlerName, _entityName, id, ex));
                 throw;
             }
         }
