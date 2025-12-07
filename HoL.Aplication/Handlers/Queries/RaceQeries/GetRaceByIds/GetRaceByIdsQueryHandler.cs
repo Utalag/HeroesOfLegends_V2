@@ -1,68 +1,75 @@
-﻿using HoL.Aplication.DTOs.EntitiDtos;
-using HoL.Aplication.Handlers.Queries.GenericQueryes;
+﻿using System.Diagnostics;
+using HoL.Aplication.DTOs.EntitiDtos;
+using HoL.Aplication.Handlers.Responses;
 using HoL.Aplication.Interfaces.IRerpositories;
-using HoL.Domain.Entities;
+using HoL.Domain.LogMessages;
+using Microsoft.AspNetCore.Http;
 
 namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceByIds
 {
-    /// <summary>
-    /// MediatR handler pro získání ras podle kolekce ID.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Handler dědí z <see cref="GenericIdsQueryHandler{TEntity, TDto, TRepository}"/>
-    /// a poskytuje konkrétní implementaci pro Race entity.
-    /// </para>
-    /// <para>
-    /// Provádí:
-    /// <list type="number">
-    /// <item><description>Validaci a normalizaci vstupních ID</description></item>
-    /// <item><description>Načtení ras z repository</description></item>
-    /// <item><description>Mapování na RaceDto</description></item>
-    /// <item><description>Logování operací a výsledků</description></item>
-    /// </list>
-    /// </para>
-    /// </remarks>
-    /// <example>
-    /// Použití v API:
-    /// <code>
-    /// var query = new GetRacesByIdsQuery { Ids = new[] { 1, 2, 3 } };
-    /// var results = await _mediator.Send(query);
-    /// </code>
-    /// </example>
-    /// <seealso cref="GetRacesByIdsQuery"/>
-    /// <seealso cref="IRaceRepository"/>
-    public class GetRaceByIdsQueryHandler
-        : GenericIdsQueryHandler<Race, RaceDto, IRaceRepository>,
-          IRequestHandler<GetRacesByIdsQuery, IEnumerable<RaceDto>>
+
+    public class GetRaceByIdsQueryHandler : IRequestHandler<GetRacesByIdsQuery, Response<IEnumerable<RaceDto>>>
     {
-        /// <summary>
-        /// Inicializuje novou instanci <see cref="GetRaceByIdsQueryHandler"/>.
-        /// </summary>
-        /// <param name="raceRepository">Repository pro přístup k Race entitám</param>
-        /// <param name="mapper">AutoMapper instance pro mapování entity na DTO</param>
-        /// <param name="logger">Logger pro zaznamenávání operací</param>
-        /// <exception cref="ArgumentNullException">Pokud některý z parametrů je null</exception>
-        public GetRaceByIdsQueryHandler(IRaceRepository raceRepository,
-                                        IMapper mapper,
-                                        ILogger<GetRaceByIdsQueryHandler> logger)
-            : base(raceRepository, mapper, logger, (repo, id, ct) => repo.GetByIdAsync(id, ct))
+        private readonly IRaceRepository _repository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMapper _mapper;
+
+        public GetRaceByIdsQueryHandler(IRaceRepository repository, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        /// <summary>
-        /// Zpracuje query pro získání ras podle kolekce ID.
-        /// </summary>
-        /// <param name="request">Query obsahující kolekci ID k načtení</param>
-        /// <param name="cancellationToken">Token pro zrušení operace</param>
-        /// <returns>
-        /// Kolekce <see cref="RaceDto"/> pro nalezené rasy. Prázdná kolekce pokud žádné rasy nebyly nalezeny.
-        /// </returns>
-        /// <exception cref="OperationCanceledException">Pokud byla operace zrušena</exception>
-        /// <exception cref="Exception">Pokud dojde k neočekávané chybě</exception>
-        public async Task<IEnumerable<RaceDto>> Handle(GetRacesByIdsQuery request, CancellationToken cancellationToken)
+
+        public async Task<Response<IEnumerable<RaceDto>>> Handle(GetRacesByIdsQuery request, CancellationToken cancellationToken)
         {
-            return await HandleGetByIds(request.Ids, cancellationToken,nameof(GetRaceByIdsQueryHandler));
+            var sw = Stopwatch.StartNew();
+            var traceId = _httpContextAccessor.HttpContext?.TraceIdentifier ?? Guid.NewGuid().ToString("N");
+
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var races = await _repository.GetByIdsAsync(request.Ids, cancellationToken);
+
+                if (!races.Any())
+                {
+                    sw.Stop();
+                    return Response<IEnumerable<RaceDto>>.NoContent(
+                        eventId: LogEventIds.QueryNotFoundHandled,
+                        traceId: traceId,
+                        elapsedMs: sw.ElapsedMilliseconds);
+                }
+                var raceDto = _mapper.Map<IEnumerable<RaceDto>>(races);
+                sw.Stop();
+                return Response<IEnumerable<RaceDto>>.Ok(raceDto,
+                    eventId: LogEventIds.QueryHandled,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
+
+            }
+            catch (OperationCanceledException)
+            {
+                sw.Stop();
+                return Response<IEnumerable<RaceDto>>.Canceled(
+                    eventId: LogEventIds.QueryCenceled,
+                    traceId: traceId,
+                    statusCode: 499,
+                    elapsedMs: sw.ElapsedMilliseconds);
+                throw;
+            }
+
+            catch (Exception)
+            {
+                return Response<IEnumerable<RaceDto>>.Fail(
+                    error: "An error occurred while processing the request.",
+                    eventId: LogEventIds.QueryFailed,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
+                throw;
+            }
         }
     }
+
+
 }

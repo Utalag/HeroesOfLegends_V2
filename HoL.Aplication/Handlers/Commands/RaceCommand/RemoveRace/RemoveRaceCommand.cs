@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HoL.Aplication.DTOs.EntitiDtos;
+using HoL.Aplication.Handlers.Responses;
 using MediatR;
 
 namespace HoL.Aplication.Handlers.Commands.RaceCommand.RemoveRace
 {
-    public sealed record RemoveRaceCommand(RaceDto RaceDto) : IRequest<bool>;
+    public sealed record RemoveRaceCommand(RaceDto RaceDto) : IRequest<Response>;
 }

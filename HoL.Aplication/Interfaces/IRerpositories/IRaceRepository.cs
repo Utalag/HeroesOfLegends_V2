@@ -43,6 +43,8 @@ namespace HoL.Aplication.Interfaces.IRerpositories
         /// </summary>
         Task<Race?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
+        Task<IEnumerable<Race?>> GetByIdsAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Vrátí všechny rasy (pro jednoduchost bez stránkování).
         /// </summary>

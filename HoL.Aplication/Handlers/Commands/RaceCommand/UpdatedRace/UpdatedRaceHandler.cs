@@ -1,6 +1,9 @@
-﻿using HoL.Aplication.Interfaces.IRerpositories;
+﻿using HoL.Aplication.Handlers.Responses;
+using HoL.Aplication.Interfaces.IRerpositories;
 using HoL.Domain.Entities;
+using HoL.Domain.Enums.Logging;
 using HoL.Domain.LogMessages;
+using Microsoft.AspNetCore.Http;
 
 namespace HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace
 {
@@ -8,72 +11,72 @@ namespace HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace
     /// Handler pro aktualizaci existující rasy.
     /// Validace probíhá automaticky přes FluentValidation pipeline (ValidationBehavior).
     /// </summary>
-    public class UpdatedRaceHandler : IRequestHandler<UpdatedRaceCommand, int>
+    public class UpdatedRaceHandler : IRequestHandler<UpdatedRaceCommand, Response<int>>
     {
         private readonly IRaceRepository _repository;
         private readonly IMapper _mapper;
         private readonly ILogger<UpdatedRaceHandler> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UpdatedRaceHandler(
             IRaceRepository repository,
             IMapper mapper,
-            ILogger<UpdatedRaceHandler> logger)
+            ILogger<UpdatedRaceHandler> logger,
+            IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        public async Task<int> Handle(UpdatedRaceCommand request, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(UpdatedRaceCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation(LogMessageTemplates.Updating.UpdatingEntityWithId(
-                nameof(UpdatedRaceHandler),
-                request.RaceDto.GetType().Name,
-                request.RaceDto.RaceId));
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var traceId = _httpContextAccessor.HttpContext?.TraceIdentifier ?? Guid.NewGuid().ToString("N");
 
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                var existingRace = await _repository.ExistsAsync(request.RaceDto.RaceId, cancellationToken);
+                var exists = await _repository.ExistsAsync(request.RaceDto.RaceId, cancellationToken);
 
-                if (existingRace)
+                if (!exists)
                 {
-                    _logger.LogInformation(LogMessageTemplates.Existence.EntityDoesNotExist(
-                        nameof(UpdatedRaceHandler),
-                        request.RaceDto.GetType().Name,
-                        request.RaceDto.RaceId));
-                    return 0;
+                    sw.Stop();
+                    return Response<int>.NoContent(
+                        eventId: LogIdFactory.Create(ProjectLayerType.Application, OperationType.Command, LogLevelCodeType.Information, EventVariantType.QueryNotFound),
+                        traceId: traceId,
+                        elapsedMs: sw.ElapsedMilliseconds);
                 }
 
                 var domain = _mapper.Map<Race>(request.RaceDto);
-
                 await _repository.UpdateAsync(domain, cancellationToken);
-                _logger.LogInformation(
-                    LogMessageTemplates.Updating.EntityUpdatedSuccessfullyWithId(
-                        nameof(UpdatedRaceHandler),
-                        request.RaceDto.GetType().Name,
-                        request.RaceDto.RaceId));
 
-                return domain.RaceId;
+                sw.Stop();
+                return Response<int>.Ok(
+                    data: domain.RaceId,
+                    eventId: LogEventIds.CommandUpdated,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(
-                    LogMessageTemplates.Exceptions.OperationCanceledWithId(
-                        nameof(UpdatedRaceHandler),
-                        request.RaceDto.GetType().Name,
-                        request.RaceDto.RaceId));
-                throw;
+
+                sw.Stop();
+                return Response<int>.Canceled(
+                    eventId: LogEventIds.CommandCanceled,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    LogMessageTemplates.Exceptions.UnexpectedErrorWithId(
-                        nameof(UpdatedRaceHandler),
-                        request.RaceDto.GetType().Name,
-                        request.RaceDto.RaceId,
-                        ex));
-                throw;
+
+                sw.Stop();
+                return Response<int>.Fail(
+                    error: ex.Message,
+                    eventId: LogEventIds.CommandFailed,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
             }
         }
     }

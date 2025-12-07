@@ -18,13 +18,13 @@ namespace HoL.Domain.ValueObjects.Anatomi
         public RaceSize RaceSize { get; set; }
         public int WeightMin { get; set; }
         public int WeightMax { get; set; }
-        public int BodyHeightMin { get; set; }
-        public int BodyHeightMax { get; set; }
+        public int LengthMin { get; set; }
+        public int LengthMax { get; set; }
         public int HeihtMin { get; set; }
         public int HeihtMax { get; set; }
         public int MaxAge { get; set; }
 
-        public List<BodyPart>? BodyParts { get; set; } = new();
+        public List<BodyPart>? BodyParts { get; set; }
 
     }
 }

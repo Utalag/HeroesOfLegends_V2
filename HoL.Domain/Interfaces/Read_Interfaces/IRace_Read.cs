@@ -12,7 +12,7 @@ namespace HoL.Domain.Interfaces.Read_Interfaces
     string RaceDescription { get; }
     string RaceHistory { get; }
     RaceCategory RaceCategory { get; }
-    List<string> RaceHierarchySystem { get; }
+    List<string>? RaceHierarchySystem { get; }
     ConvictionType Conviction { get; }
     Currency Treasure { get; }
     int BaseXP { get; }
@@ -23,7 +23,7 @@ namespace HoL.Domain.Interfaces.Read_Interfaces
     int ZSM { get; }
     int DomesticationValue { get; }
     int BaseInitiative { get; }
-    List<SpecialAbilities> SpecialAbilities { get; }
+    List<SpecialAbilities>? SpecialAbilities { get; }
     Dictionary<StatType, ValueRange> StatsPrimar { get; }
     Dictionary<VulnerabilityType, double> Vulnerabilities { get; set; }
     }

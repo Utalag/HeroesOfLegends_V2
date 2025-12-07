@@ -1,71 +1,66 @@
-﻿using HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace;
+﻿using HoL.Aplication.Handlers.Responses;
 using HoL.Aplication.Interfaces.IRerpositories;
 using HoL.Domain.Entities;
 using HoL.Domain.LogMessages;
+using Microsoft.AspNetCore.Http;
 
 namespace HeroesOfLegends.Application.Handlers.Commands.RaceCommand.CreatedRace
 {
-    public class CreatedRaceHandler : IRequestHandler<CreatedRaceCommand, int>
+    public class CreatedRaceHandler : IRequestHandler<CreatedRaceCommand, Response<int>>
     {
         private readonly IRaceRepository _repository;
         private readonly ILogger<CreatedRaceHandler> _logger;
         private readonly IMapper _mapper;
-        private readonly string source;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CreatedRaceHandler(
             IRaceRepository repository,
             ILogger<CreatedRaceHandler> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            source = this.GetType().Name;
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-
-        public async Task<int> Handle(CreatedRaceCommand request, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(CreatedRaceCommand request, CancellationToken cancellationToken)
         {
-            // ValidationBehavior už zkontroloval že request.RaceDto je validní
-            // Pokud by validace selhala, tento kód by se NIKDY nespustil
-
-            _logger.LogInformation(LogMessageTemplates.Creating.CreatingEntity(
-                source,
-                request.RaceDto.GetType().Name));
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var traceId = _httpContextAccessor.HttpContext?.TraceIdentifier ?? Guid.NewGuid().ToString("N");
 
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                // Mapování pomocí AutoMapper - vše je definováno v Mapper profilu
                 var domain = _mapper.Map<Race>(request.RaceDto);
-
-                // Uložení přes repository
                 await _repository.AddAsync(domain, cancellationToken);
-                _logger.LogInformation(LogMessageTemplates.Creating.EntityCreatedSuccessfully(
-                    source,
-                    request.RaceDto.GetType().Name));
 
-                return domain.RaceId;
+                sw.Stop();
+                return Response<int>.Ok(
+                    data: domain.RaceId,
+                    eventId: LogEventIds.CommandCreated,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
             }
+
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(
-                    LogMessageTemplates.Exceptions.OperationCanceledWithId(
-                        nameof(UpdatedRaceHandler),
-                        request.RaceDto.GetType().Name,
-                        request.RaceDto.RaceId));
-                throw;
+                sw.Stop();
+                return Response<int>.Canceled(
+                    eventId: LogEventIds.CommandCanceled,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    LogMessageTemplates.Exceptions.UnexpectedErrorWithId(
-                        nameof(UpdatedRaceHandler),
-                        request.RaceDto.GetType().Name,
-                        request.RaceDto.RaceId,
-                        ex));
-                throw;
+                sw.Stop();
+                return Response<int>.Fail(
+                    error: ex.Message,
+                    eventId: LogEventIds.CommandFailed,
+                    traceId: traceId,
+                    elapsedMs: sw.ElapsedMilliseconds);
             }
         }
     }
