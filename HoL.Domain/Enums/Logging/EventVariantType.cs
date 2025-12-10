@@ -18,29 +18,35 @@ namespace HoL.Domain.Enums.Logging
         QueryNotFound = 11,
         QueryInvalid = 12,
 
+        // Repository operace
+        RepositoryRead = 13,
+        RepositoryAdd = 20,
+        RepositoryUpdate = 21,
+        RepositoryDelete = 22,
+
         // Validace
-        ValidationFailed = 20,
-        ValidationWarning = 21,
+        ValidationFailed = 30,
+        ValidationWarning = 31,
 
         // Chyby
-        UnhandledException = 30,
-        TimeoutOccurred = 31,
-        ExternalServiceError = 32,
-        TaskAborted = 33,
+        UnhandledException = 40,
+        TimeoutOccurred = 41,
+        ExternalServiceError = 42,
+        TaskAborted = 43,
 
         // Bezpečnost
-        UnauthorizedAccess = 40,
-        ForbiddenOperation = 41,
-        AuthenticationFailed = 42,
+        UnauthorizedAccess = 50,
+        ForbiddenOperation = 51,
+        AuthenticationFailed = 52,
 
         // Integrace / externí volání
-        ExternalRequestSent = 50,
-        ExternalResponseReceived = 51,
+        ExternalRequestSent = 60,
+        ExternalResponseReceived = 61,
 
         // Systémové události
-        Startup = 60,
-        Shutdown = 61,
-        ConfigurationLoaded = 62
+        Startup = 70,
+        Shutdown = 71,
+        ConfigurationLoaded = 72
 
     }
 }

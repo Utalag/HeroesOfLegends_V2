@@ -6,11 +6,11 @@ using HoL.Aplication.DTOs.StatDtos;
 using HoL.Domain.Entities;
 using HoL.Domain.ValueObjects;
 using HoL.Domain.ValueObjects.Anatomi;
-using HoL.Domain.ValueObjects.Stat;
 using HoL.Domain.Helpers;
 using HoL.Domain.Helpers.AnatomiHelpers;
 using HoL.Domain.Interfaces.Read_Interfaces;
 using HoL.Domain.Interfaces.Write_Interaces;
+using HoL.Domain.ValueObjects.Anatomi.Stat;
 
 namespace HoL.Aplication.MyMapper
 {
@@ -29,7 +29,7 @@ namespace HoL.Aplication.MyMapper
             Map_Currency();
             Map_SpecialAbilities();
             Map_Weapon();
-            Map_FightingSpirit();
+            
             
             // Anatomy
             Map_AnatomyProfile();
@@ -57,8 +57,8 @@ namespace HoL.Aplication.MyMapper
         
         private void Map_Currency()
         {
-            CreateMap<Currency, CurrencyDto>();
-            CreateMap<CurrencyDto, Currency>();
+            //CreateMap<Treasure, CurrencyDto>();
+            //CreateMap<CurrencyDto, Treasure>();
         }
 
         private void Map_SpecialAbilities()
@@ -71,12 +71,6 @@ namespace HoL.Aplication.MyMapper
         {
             CreateMap<Weapon, WeaponDto>();
             CreateMap<WeaponDto, Weapon>();
-        }
-
-        private void Map_FightingSpirit()
-        {
-            CreateMap<FightingSpirit, FightingSpiritDto>();
-            CreateMap<FightingSpiritDto, FightingSpirit>();
         }
 
 

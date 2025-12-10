@@ -5,7 +5,7 @@ using HoL.Domain.Helpers;
 using HoL.Domain.Interfaces.Read_Interfaces;
 using HoL.Domain.Interfaces.Write_Interaces;
 
-namespace HoL.Domain.ValueObjects.Stat
+namespace HoL.Domain.ValueObjects.Anatomi.Stat
 {
     [ComplexType]
     public class Stat : IStatRead, IStatWrite
@@ -13,11 +13,11 @@ namespace HoL.Domain.ValueObjects.Stat
         /// <summary>
         /// Base statistic type
         /// </summary>
-        [Required] public StatType Type { get; set; }
+        public StatType Type { get; set; }
         /// <summary>
         /// Hlavní hodnota statistiky bez úprav
         /// </summary>
-        [Required] public int RawValue { get; set; }
+        public int RawValue { get; set; }
         /// <summary>
         /// Základní úprava RawValue (např. rasová úprava)
         /// </summary>

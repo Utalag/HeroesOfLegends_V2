@@ -1,7 +1,7 @@
 ﻿using HoL.Domain.Enums;
 using HoL.Domain.ValueObjects;
 using HoL.Domain.ValueObjects.Anatomi;
-using HoL.Domain.ValueObjects.Stat;
+using HoL.Domain.ValueObjects.Anatomi.Stat;
 
 namespace HoL.Domain.Interfaces.Read_Interfaces
 {
@@ -14,11 +14,11 @@ namespace HoL.Domain.Interfaces.Read_Interfaces
     RaceCategory RaceCategory { get; }
     List<string>? RaceHierarchySystem { get; }
     ConvictionType Conviction { get; }
-    Currency Treasure { get; }
+    Treasure Treasure { get; }
     int BaseXP { get; }
     AnatomyProfile BodyDimensins { get; }
     Dictionary<MobilityType, int> Mobility { get; }
-    FightingSpirit FightingSpirit { get; }
+    int FightingSpiritNumber { get; }
     Weapon RaceWeapon { get; }
     int ZSM { get; }
     int DomesticationValue { get; }

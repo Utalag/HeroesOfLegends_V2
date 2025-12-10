@@ -37,32 +37,26 @@ namespace HoL.Aplication.Handlers.Commands.GenericCommandHandlers
         {
             try
             {
-                _logger.LogInformation(LogMessageTemplates.Deleting.DeletingEntityInfo(handlerName, _entityName, entityId));
-
+                
                 cancellationToken.ThrowIfCancellationRequested();
 
                 bool exists = await _existsAsyncFunc(_repository, entityId, cancellationToken);
 
                 if (!exists)
                 {
-                    _logger.LogWarning(LogMessageTemplates.GetById.EntityNotFound(handlerName, _entityName, entityId));
                 }
 
                 await _deleteAsyncFunc(_repository, entityId, cancellationToken);
-
-                _logger.LogInformation(LogMessageTemplates.Deleting.EntityDeletedSuccessfully( handlerName, _entityName, entityId));
 
                 return true;
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceledWithId(handlerName, _entityName, entityId));
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(LogMessageTemplates.Exceptions.UnexpectedErrorWithId(handlerName, _entityName, entityId, ex));
-                throw;
+               throw;
             }
         }
     }

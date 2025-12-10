@@ -60,7 +60,7 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
         {
             if (ids is null)
             {
-                _logger.LogWarning(LogMessageTemplates.GetByIds.NullIdsCollection(handlerName));
+                
                 return Enumerable.Empty<TDto>();
             }
 
@@ -71,13 +71,11 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
 
             if (!normalizedIds.Any())
             {
-                _logger.LogWarning(LogMessageTemplates.GetByIds.NullIdsCollection(handlerName));
+                
                 return Enumerable.Empty<TDto>();
             }
 
-            _logger.LogInformation(
-                LogMessageTemplates.GetByIds.ProcessingIds(handlerName, ids.Count(), normalizedIds.Count, string.Join(", ", normalizedIds))
-            );
+           
 
             var foundEntities = new List<TEntity>(normalizedIds.Count);
 
@@ -90,7 +88,6 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
                     var entity = await _getByIdFunc(_repository, id, cancellationToken);
                     if (entity is null)
                     {
-                        _logger.LogWarning(LogMessageTemplates.GetById.EntityNotFound(handlerName, _entityName, id));
                         continue;
                     }
 
@@ -99,26 +96,21 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceled(handlerName));
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(LogMessageTemplates.Exceptions.UnexpectedError(handlerName, _entityName, ex));
                 throw;
             }
 
             if (foundEntities.Count == 0)
             {
-                _logger.LogInformation(LogMessageTemplates.GetByIds.NoEntitiesFound(handlerName, _entityName));
                 return Enumerable.Empty<TDto>();
             }
 
             var dtoList = _mapper.Map<List<TDto>>(foundEntities);
 
-            _logger.LogInformation(
-                LogMessageTemplates.GetByIds.QueryCompleted(handlerName, normalizedIds.Count, dtoList.Count)
-            );
+            
 
             return dtoList;
         }

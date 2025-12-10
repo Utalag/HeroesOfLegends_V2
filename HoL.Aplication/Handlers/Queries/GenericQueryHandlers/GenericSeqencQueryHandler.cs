@@ -42,15 +42,13 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
         {
             try
             {
-                _logger.LogInformation(
-                    LogMessageTemplates.Pagination.RetrievingPageWithSort(handlerName, _entityName, page, size, sortBy ?? "default", sortDir.ToString())
-                );
+               
 
                 var entities = await _getSequenceDataFunc(_repository, page, size, sortBy, sortDir, cancellationToken);
 
                 if (entities == null || !entities.Any())
                 {
-                    _logger.LogInformation(LogMessageTemplates.GetByIds.NoEntitiesFound(handlerName, _entityName));
+
                     return Enumerable.Empty<TDto>();
                 }
 
@@ -58,20 +56,18 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
                 var dtoList = _mapper.Map<IEnumerable<TDto>>(entityList);
                 var dtoCount = dtoList.Count();
 
-                _logger.LogInformation(
-                    LogMessageTemplates.Pagination.SequenceQueryCompleted(handlerName, dtoCount, _entityName)
-                );
+
                 
                 return dtoList;
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceled(handlerName));
+        
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(LogMessageTemplates.Exceptions.UnexpectedError(handlerName, _entityName, ex));
+    
                 throw;
             }
         }

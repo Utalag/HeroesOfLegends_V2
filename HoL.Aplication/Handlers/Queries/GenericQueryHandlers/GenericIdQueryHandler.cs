@@ -95,11 +95,11 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
         {
             if (id < 1)
             {
-                _logger.LogWarning(LogMessageTemplates.GetById.InvalidId(handlerName, id));
+                
                 return null;
             }
 
-            _logger.LogInformation(LogMessageTemplates.GetById.LookingForEntityById(handlerName, _entityName, id));
+            
 
             try
             {
@@ -109,23 +109,20 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
 
                 if (entity is null)
                 {
-                    _logger.LogWarning(LogMessageTemplates.GetById.EntityNotFound(handlerName, _entityName, id));
+                    
                     return null;
                 }
 
                 var dto = _mapper.Map<TDto>(entity);
 
-                _logger.LogInformation(LogMessageTemplates.GetById.EntityRetrievedSuccessfully(handlerName, _entityName, id));
                 return dto;
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceledWithId(handlerName, _entityName, id));
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, LogMessageTemplates.Exceptions.UnexpectedErrorWithId(handlerName, _entityName, id, ex));
                 throw;
             }
         }

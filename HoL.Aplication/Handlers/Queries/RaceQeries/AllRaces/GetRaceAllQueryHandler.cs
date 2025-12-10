@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using HoL.Aplication.DTOs.EntitiDtos;
-using HoL.Aplication.Handlers.Queries.GenericQueryes;
+﻿using HoL.Aplication.DTOs.EntitiDtos;
 using HoL.Aplication.Handlers.Responses;
-using HoL.Aplication.Interfaces.IRerpositories;
-using HoL.Domain.Entities;
+using HoL.Contracts;
 using HoL.Domain.LogMessages;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace HoL.Aplication.Handlers.Queries.RaceQeries.AllRaces
 {
@@ -43,7 +41,7 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.AllRaces
                         traceId: traceId,
                         elapsedMs: sw.ElapsedMilliseconds);
                 }
-                var raceDto = _mapper.Map <IEnumerable<RaceDto>>(race);
+                var raceDto = _mapper.Map<IEnumerable<RaceDto>>(race);
 
                 sw.Stop();
                 return Response<IEnumerable<RaceDto>>.Ok(raceDto,

@@ -5,7 +5,7 @@ namespace HoL.Aplication.Validators.ValueObjectValidators
 {
     /// <summary>
     /// Validator pro CurrencyDto - validace měnových hodnot.
-    /// Znovupoužitelný ve všech DTOs které obsahují Currency (Race, Character, Shop, atd.).
+    /// Znovupoužitelný ve všech DTOs které obsahují Treasure (Race, Character, Shop, atd.).
     /// </summary>
     public class CurrencyDtoValidator : AbstractValidator<CurrencyDto>
     {

@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using HoL.Domain.Enums;
 using HoL.Domain.Helpers.AnatomiHelpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace HoL.Domain.ValueObjects.Anatomi
 {
-    [ComplexType]
+  
     public class BodyPart
     {
         /// <summary>Unikátní název části těla (např. "hlava", "levé křídlo", "ocas")</summary>
@@ -25,7 +26,7 @@ namespace HoL.Domain.ValueObjects.Anatomi
         public string Function { get; set; } = string.Empty;
 
         /// <summary>Je-li část těla schopná útoku, zde je definice</summary>
-        public BodyPartAttack? Attack { get; set; }
+       public BodyPartAttack? Attack { get; set; }
 
         /// <summary>Je-li část těla zranitelná, zde je definice</summary>
         public BodyPartDefense? Defense { get; set; }

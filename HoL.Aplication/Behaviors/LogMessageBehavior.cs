@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HoL.Aplication.Handlers.Responses;
+﻿using HoL.Aplication.Handlers.Responses;
 using HoL.Domain.Enums.Logging;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 
 namespace HoL.Aplication.Behaviors

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HoL.Domain.Helpers.AnatomiHelpers
 {
-    [ComplexType]
+    [Owned]
     public class BodyPartDefense
     {
         public int ArmorValue { get; set; }             // Hodnota brnění poskytovaná touto částí těla

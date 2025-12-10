@@ -34,15 +34,13 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
 
         protected async Task<IEnumerable<TDto>> HandleGetAll(CancellationToken cancellationToken, string handlerName)
         {
-            _logger.LogInformation(LogMessageTemplates.GetAll.RetrievingAllEntities(handlerName, _entityName));
-
+            
             try
             {
                 var entities = await _getAllFunc(_repository, cancellationToken);
                 
                 if (!entities.Any())
                 {
-                    _logger.LogInformation(LogMessageTemplates.GetByIds.NoEntitiesFound(handlerName, _entityName));
                     return Enumerable.Empty<TDto>();
                 }
 
@@ -50,20 +48,18 @@ namespace HoL.Aplication.Handlers.Queries.GenericQueryes
                 var dtoList = _mapper.Map<IEnumerable<TDto>>(entityList);
                 var dtoListCount = dtoList.Count();
 
-                _logger.LogInformation(
-                    LogMessageTemplates.GetAll.EntitiesRetrievedSuccessfully(handlerName, dtoListCount, _entityName)
-                );
+              
                 
                 return dtoList;
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceled(handlerName));
+                
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(LogMessageTemplates.Exceptions.UnexpectedError(handlerName, _entityName, ex));
+                
                 throw;
             }
         }

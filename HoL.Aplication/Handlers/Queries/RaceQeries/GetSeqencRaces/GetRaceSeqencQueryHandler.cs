@@ -1,17 +1,12 @@
-﻿using System.Diagnostics;
 using HoL.Aplication.DTOs.EntitiDtos;
-using HoL.Aplication.Handlers.Queries.GenericQueryes;
 using HoL.Aplication.Handlers.Responses;
-using HoL.Aplication.Interfaces.IRerpositories;
-using HoL.Domain.Entities;
-using HoL.Domain.Enums;
+using HoL.Contracts;
 using HoL.Domain.LogMessages;
-using MediatR;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
 {
-
     public class GetRaceSeqencQueryHandler : IRequestHandler<GetRaceSeqencQuery, Response<IEnumerable<RaceDto>>>
     {
         private readonly IRaceRepository _repository;
@@ -34,7 +29,12 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 
-                var races = await _repository.GetBySeqencAsync(request.page,request.size,request.SortBy,request.SortDir, cancellationToken);
+                var races = await _repository.GetBySeqencAsync(
+                    request.page,
+                    request.size,
+                    request.SortBy,
+                    request.SortDir.ToString().ToLower(),
+                    cancellationToken);
 
                 if (!races.Any())
                 {
@@ -44,13 +44,13 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
                         traceId: traceId,
                         elapsedMs: sw.ElapsedMilliseconds);
                 }
+
                 var raceDto = _mapper.Map<IEnumerable<RaceDto>>(races);
                 sw.Stop();
                 return Response<IEnumerable<RaceDto>>.Ok(raceDto,
                     eventId: LogEventIds.QueryHandled,
                     traceId: traceId,
                     elapsedMs: sw.ElapsedMilliseconds);
-
             }
             catch (OperationCanceledException)
             {
@@ -62,7 +62,6 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
                     elapsedMs: sw.ElapsedMilliseconds);
                 throw;
             }
-
             catch (Exception)
             {
                 return Response<IEnumerable<RaceDto>>.Fail(

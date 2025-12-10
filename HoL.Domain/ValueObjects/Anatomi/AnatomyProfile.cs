@@ -1,17 +1,13 @@
 ﻿using HoL.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace HoL.Domain.ValueObjects.Anatomi
 {
     /// <summary>
     /// Profil anatomie rasy/postavy s hierarchickou strukturou tělesných částí.
     /// </summary>
-    [ComplexType]
+
+    [Owned]
     public class AnatomyProfile
     {
         // Základní tělesné rozměry
@@ -24,7 +20,7 @@ namespace HoL.Domain.ValueObjects.Anatomi
         public int HeihtMax { get; set; }
         public int MaxAge { get; set; }
 
-        public List<BodyPart>? BodyParts { get; set; }
+        
 
     }
 }

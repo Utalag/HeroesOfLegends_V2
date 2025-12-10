@@ -1,5 +1,5 @@
 ﻿using HoL.Aplication.Handlers.Responses;
-using HoL.Aplication.Interfaces.IRerpositories;
+using HoL.Contracts;
 using HoL.Domain.Entities;
 using HoL.Domain.Enums.Logging;
 using HoL.Domain.LogMessages;

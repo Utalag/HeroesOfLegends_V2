@@ -1,14 +1,14 @@
-﻿using System.Diagnostics;
-using HoL.Aplication.DTOs.EntitiDtos;
+﻿using HoL.Aplication.DTOs.EntitiDtos;
 using HoL.Aplication.Handlers.Responses;
-using HoL.Aplication.Interfaces.IRerpositories;
+using HoL.Contracts;
 using HoL.Domain.LogMessages;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceById
 {
 
-    public class GetRaceByIdQueryHandler : IRequestHandler<GetRaceByIdQuery,Response<RaceDto?>>
+    public class GetRaceByIdQueryHandler : IRequestHandler<GetRaceByIdQuery, Response<RaceDto?>>
     {
         private readonly IRaceRepository _repository;
         private readonly IHttpContextAccessor _httpContextAccessor;

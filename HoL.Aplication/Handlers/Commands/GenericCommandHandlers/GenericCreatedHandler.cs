@@ -72,7 +72,6 @@ namespace HoL.Aplication.Handlers.Commands.GenericCommandHandlers
         {
             try
             {
-                _logger.LogInformation(LogMessageTemplates.Creating.CreatingEntity(handlerName, _entityName));
 
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -82,18 +81,16 @@ namespace HoL.Aplication.Handlers.Commands.GenericCommandHandlers
                 // Uložení entity do repository
                 var newEntity = await _addAsyncFunc(_repository, entity, cancellationToken);
 
-                _logger.LogInformation(LogMessageTemplates.Creating.EntityCreatedSuccessfully(handlerName, _entityName));
 
                 return _mapper.Map<TDto>(newEntity);
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceled(handlerName));
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(LogMessageTemplates.Exceptions.UnexpectedError(handlerName, _entityName, ex));
+
                 throw;
             }
         }

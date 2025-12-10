@@ -37,34 +37,28 @@ namespace HoL.Aplication.Handlers.Commands.GenericCommandHandlers
         {
             try
             {
-                _logger.LogInformation(LogMessageTemplates.Updating.UpdatingEntityWithId(handlerName, _entityName, id));
-
+                
                 cancellationToken.ThrowIfCancellationRequested();
 
                 bool exists = await _existsAsyncFunc(_repository, id, cancellationToken);
 
                 if (!exists)
                 {
-                    _logger.LogWarning(LogMessageTemplates.GetById.EntityNotFound(handlerName, _entityName, id));
-                    _logger.LogWarning(LogMessageTemplates.Generic.Warning(handlerName, "Return originalDto without update."));
                     return dto;
                 }
 
                 var entity = _mapper.Map<TEntity>(dto);
                 var updatedEntity = await _updateAsyncFunc(_repository, entity, cancellationToken);
 
-                _logger.LogInformation(LogMessageTemplates.Updating.EntityUpdatedSuccessfullyWithId(handlerName, _entityName, id));
-
+                
                 return _mapper.Map<TDto>(updatedEntity);
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(LogMessageTemplates.Exceptions.OperationCanceledWithId(handlerName, _entityName, id));
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(LogMessageTemplates.Exceptions.UnexpectedErrorWithId(handlerName, _entityName, id, ex));
                 throw;
             }
         }
