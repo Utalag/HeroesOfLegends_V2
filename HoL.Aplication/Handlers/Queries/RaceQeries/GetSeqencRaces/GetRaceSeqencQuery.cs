@@ -14,7 +14,7 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
     public sealed record GetRaceSeqencQuery(
         int page =1,
         int size = 5,
-        string? SortBy = null,   // povolené: "RaceName", "RaceId", "RaceCategory"
+        string? SortBy = null,   // povolené: "RaceName", "Id", "RaceCategory"
         SortDirection SortDir = SortDirection.Original
     ) : IRequest<Response<IEnumerable<RaceDto>>>;
 }

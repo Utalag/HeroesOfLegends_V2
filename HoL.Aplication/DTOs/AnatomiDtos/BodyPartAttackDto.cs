@@ -17,7 +17,7 @@ namespace HoL.Aplication.DTOs.AnatomiDtos
     /// // Rozsah damage: 12-56
     /// var dragonBite = new BodyPartAttackDto
     /// {
-    ///     DamageDice = new DiceDto { Count = 4, Sides = DiceType.D12, FinalBonus = 8 },
+    ///     DamageDice = new DiceDto { Quantity = 4, Sides = DiceType.D12, FinalBonus = 8 },
     ///     DamageType = DamageType.Piercing,
     ///     Initiative = 1
     /// };

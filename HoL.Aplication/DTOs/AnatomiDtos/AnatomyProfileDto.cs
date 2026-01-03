@@ -52,9 +52,9 @@ namespace HoL.Aplication.DTOs.AnatomiDtos
     ///     MaxAge = 750,
     ///     BodyParts = new List&lt;BodyPartDto&gt;
     ///     {
-    ///         new BodyPartDto { Name = "Hlava", Type = BodyPartType.Head, Count = 1 },
-    ///         new BodyPartDto { Name = "Ruce", Type = BodyPartType.Arm, Count = 2 },
-    ///         new BodyPartDto { Name = "Nohy", Type = BodyPartType.Leg, Count = 2 }
+    ///         new BodyPartDto { Name = "Hlava", BodyPartCategory = BodyPartType.Head, Quantity = 1 },
+    ///         new BodyPartDto { Name = "Ruce", BodyPartCategory = BodyPartType.Arm, Quantity = 2 },
+    ///         new BodyPartDto { Name = "Nohy", BodyPartCategory = BodyPartType.Leg, Quantity = 2 }
     ///     }
     /// };
     /// </code>

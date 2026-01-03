@@ -14,7 +14,7 @@ namespace HoL.Aplication.Interfaces.IDtos.IStatDtos.IStatWrites
     /// <code>
     /// var paladinCharisma = new StatDto
     /// {
-    ///     Type = StatType.Charisma,
+    ///     BodyPartCategory = BodyStat.Charisma,
     ///     RawValue = 18,           
     ///     ValueAdjustment = 1,     
     ///     FinalValue = 19,         // 18 + 1 = 19
@@ -23,14 +23,14 @@ namespace HoL.Aplication.Interfaces.IDtos.IStatDtos.IStatWrites
     /// };
     /// </code>
     /// </example>
-    /// <seealso cref="StatType"/>
+    /// <seealso cref="BodyStat"/>
     /// <seealso cref="StatDtoValidator"/>
     internal interface IStatWriteDto
     {
         /// <summary>
         /// Typ statistiky (STR, DEX, CON, INT, WIS, CHA).
         /// </summary>
-        StatType Type { get; set; }
+        BodyStat Type { get; set; }
         /// <summary>
         /// Trvalé úpravy základní hodnoty z ras, levelů, itemů a permanent efektů.
         /// </summary

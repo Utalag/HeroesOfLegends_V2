@@ -13,10 +13,10 @@ namespace HoL.Infrastructure.Data.ModelConfigurations
         public void Configure(EntityTypeBuilder<Race> builder)
         {
             builder.ToTable("Races");
-            builder.HasKey(r => r.RaceId);
+            builder.HasKey(r => r.Id);
 
             // Basic properties
-            builder.Property(r => r.RaceId).ValueGeneratedOnAdd();
+            builder.Property(r => r.Id).ValueGeneratedOnAdd();
             builder.Property(r => r.RaceName).IsRequired().HasMaxLength(100);
             builder.Property(r => r.RaceDescription).HasMaxLength(1000);
             builder.Property(r => r.RaceHistory).HasMaxLength(2000);
@@ -33,24 +33,24 @@ namespace HoL.Infrastructure.Data.ModelConfigurations
                 .HasColumnType("nvarchar(100)");
 
 
-            // Configure AnatomyProfile as owned entity
+            // Configure BodyDimension as owned entity
             builder.OwnsOne(r => r.BodyDimensins);
 
             // Configure BodyParts collection
             builder.OwnsMany(r => r.BodyParts, bodyPart =>
             {
                 bodyPart.ToTable("RaceBodyParts");
-                bodyPart.WithOwner().HasForeignKey("RaceId");
+                bodyPart.WithOwner().HasForeignKey("Id");
 
                 bodyPart.Property(bp => bp.Name)
                     .IsRequired()
                     .HasMaxLength(100);
 
-                bodyPart.Property(bp => bp.Type)
+                bodyPart.Property(bp => bp.BodyPartCategory)
                     .IsRequired()
                     .HasConversion<string>();
 
-                bodyPart.Property(bp => bp.Count)
+                bodyPart.Property(bp => bp.Quantity)
                     .HasDefaultValue(1);
 
                 bodyPart.Property(bp => bp.Function)
@@ -79,9 +79,9 @@ namespace HoL.Infrastructure.Data.ModelConfigurations
             // Configure Treasure as owned entity
             builder.OwnsOne(cu => cu.Treasure, treasure=>
             {
-                treasure.HasOne(t=>t.Currency)
+                treasure.HasOne(t=>t.CurrencyGroup)
                 .WithMany()
-                .HasForeignKey(t=>t.CurrencyId)
+                .HasForeignKey(t=>t.CurrencyGroupId)
                 .IsRequired(false);
             });
 
@@ -91,7 +91,7 @@ namespace HoL.Infrastructure.Data.ModelConfigurations
                 .HasColumnType("nvarchar(max)")
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                    v => JsonSerializer.Deserialize<Dictionary<StatType, ValueRange>>(v, (JsonSerializerOptions)null) ?? new Dictionary<StatType, ValueRange>()
+                    v => JsonSerializer.Deserialize<Dictionary<BodyStat, ValueRange>>(v, (JsonSerializerOptions)null) ?? new Dictionary<BodyStat, ValueRange>()
                 );
 
             // Configure Mobility as JSON

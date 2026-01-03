@@ -43,7 +43,7 @@ namespace HoL.Infrastructure.Migrations
                         name: "FK_RaceBodyParts_Races_RaceId",
                         column: x => x.RaceId,
                         principalTable: "Races",
-                        principalColumn: "RaceId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
         }
@@ -84,7 +84,7 @@ namespace HoL.Infrastructure.Migrations
                         name: "FK_BodyParts_Races_RaceId",
                         column: x => x.RaceId,
                         principalTable: "Races",
-                        principalColumn: "RaceId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
         }

@@ -78,11 +78,11 @@ namespace HoL.Aplication.MyMapper
         
         private void Map_AnatomyProfile()
         {
-            CreateMap<AnatomyProfile, AnatomyProfileDto>()
+            CreateMap<BodyDimension, AnatomyProfileDto>()
                 .ForMember(dest => dest.HeightMin, opt => opt.MapFrom(src => src.HeihtMin))
                 .ForMember(dest => dest.HeightMax, opt => opt.MapFrom(src => src.HeihtMax));
             
-            CreateMap<AnatomyProfileDto, AnatomyProfile>()
+            CreateMap<AnatomyProfileDto, BodyDimension>()
                 .ForMember(dest => dest.HeihtMin, opt => opt.MapFrom(src => src.HeightMin))
                 .ForMember(dest => dest.HeihtMax, opt => opt.MapFrom(src => src.HeightMax));
         }

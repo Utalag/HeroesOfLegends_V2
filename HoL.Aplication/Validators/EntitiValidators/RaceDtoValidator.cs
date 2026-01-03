@@ -18,7 +18,7 @@ namespace HoL.Aplication.Validators.EntitiValidators
             
             RuleFor(x => x.RaceId)
                 .GreaterThan(0)
-                .WithMessage("RaceId must be greater than 0 for update operation");
+                .WithMessage("Id must be greater than 0 for update operation");
 
             // === Povinná pole ===
 
@@ -131,7 +131,7 @@ namespace HoL.Aplication.Validators.EntitiValidators
 
             RuleFor(x => x.BodyDimensins)
                 .NotNull()
-                .WithMessage("Body dimensions (AnatomyProfile) cannot be null")
+                .WithMessage("Body dimensions (BodyDimension) cannot be null")
                 .SetValidator(new AnatomyProfileDtoValidator()!);
 
             // === StatsPrimar dictionary s ValueRangeValidator ===

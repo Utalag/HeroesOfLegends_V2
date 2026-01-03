@@ -16,7 +16,7 @@ namespace HoL.Domain.Interfaces.Write_Interaces
         ConvictionType Conviction { get; set; }
         Treasure Treasure { get; set; }
         int BaseXP { get; set; }
-        AnatomyProfile BodyDimensins { get; set; }
+        BodyDimension BodyDimensins { get; set; }
         Dictionary<MobilityType, int> Mobility { get; }
         int FightingSpiritNumber { get; set; }
         Weapon RaceWeapon { get; set; }
@@ -24,7 +24,7 @@ namespace HoL.Domain.Interfaces.Write_Interaces
         int DomesticationValue { get; set; }
         int BaseInitiative { get; set; }
         List<SpecialAbilities>? SpecialAbilities { get; set; }
-        Dictionary<StatType, ValueRange> StatsPrimar { get; set; }
+        Dictionary<BodyStat, ValueRange> StatsPrimar { get; set; }
         Dictionary<VulnerabilityType, double> Vulnerabilities { get; set; }
     }
 

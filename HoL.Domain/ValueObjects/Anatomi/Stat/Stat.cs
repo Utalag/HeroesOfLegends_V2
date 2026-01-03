@@ -13,7 +13,7 @@ namespace HoL.Domain.ValueObjects.Anatomi.Stat
         /// <summary>
         /// Base statistic type
         /// </summary>
-        public StatType Type { get; set; }
+        public BodyStat Type { get; set; }
         /// <summary>
         /// Hlavní hodnota statistiky bez úprav
         /// </summary>

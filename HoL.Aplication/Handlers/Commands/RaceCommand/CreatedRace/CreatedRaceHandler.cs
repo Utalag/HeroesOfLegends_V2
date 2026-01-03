@@ -39,7 +39,7 @@ namespace HeroesOfLegends.Application.Handlers.Commands.RaceCommand.CreatedRace
 
                 sw.Stop();
                 return Response<int>.Ok(
-                    data: domain.RaceId,
+                    data: domain.Id,
                     eventId: LogEventIds.CommandCreated,
                     traceId: traceId,
                     elapsedMs: sw.ElapsedMilliseconds);

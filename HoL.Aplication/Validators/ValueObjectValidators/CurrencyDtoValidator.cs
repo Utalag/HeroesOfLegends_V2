@@ -29,7 +29,7 @@ namespace HoL.Aplication.Validators.ValueObjectValidators
             // Alespoň jedna měna musí být zadaná
             RuleFor(x => x)
                 .Must(c => c.Gold.HasValue || c.Silver.HasValue || c.Copper.HasValue)
-                .WithMessage("At least one currency value (Gold, Silver, or Copper) must be specified");
+                .WithMessage("At least one currencyGroup value (Gold, Silver, or Copper) must be specified");
         }
     }
 }

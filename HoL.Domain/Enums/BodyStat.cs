@@ -1,6 +1,6 @@
 ﻿namespace HoL.Domain.Enums
 {
-    public enum StatType
+    public enum BodyStat
     {
         Strength = 1,
         Agility = 2,

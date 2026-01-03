@@ -10,7 +10,7 @@ namespace HoL.Aplication.Interfaces.IDtos.IStatDtos.IStatReads
     /// úpravami a finální vypočítanou hodnotou. Každá stat má také bonus modifikátor používaný pro hody.
     /// </remarks>
 
-    /// <seealso cref="StatType"/>
+    /// <seealso cref="BodyStat"/>
     /// <seealso cref="StatDtoValidator"/>/// <summary>
     /// Interface pro zobrazeni Statu
     /// </summary>
@@ -20,14 +20,14 @@ namespace HoL.Aplication.Interfaces.IDtos.IStatDtos.IStatReads
     /// úpravami a finální vypočítanou hodnotou. Každá stat má také bonus modifikátor používaný pro hody.
     /// </remarks>
 
-    /// <seealso cref="StatType"/>
+    /// <seealso cref="BodyStat"/>
     /// <seealso cref="StatDtoValidator"/>
     public interface IStatReadDto
     {
         /// <summary>
         /// Typ statistiky (STR, DEX, CON, INT, WIS, CHA).
         /// </summary>
-        StatType Type { get; }
+        BodyStat Type { get; }
         /// <summary>
         /// Trvalé úpravy základní hodnoty z ras, levelů, itemů a permanent efektů.
         /// </summary

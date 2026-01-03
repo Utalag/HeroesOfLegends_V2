@@ -4,7 +4,7 @@ namespace HoL.Domain.Interfaces.Read_Interfaces
 {
     public interface IStatRead
     {
-        StatType Type { get; }
+        BodyStat Type { get; }
         public int FinalValue { get; }
         public int FinalBonus { get; }
         int RawBonus { get; }

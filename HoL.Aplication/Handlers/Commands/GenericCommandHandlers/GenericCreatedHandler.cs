@@ -60,7 +60,7 @@ namespace HoL.Aplication.Handlers.Commands.GenericCommandHandlers
         /// </list>
         /// </para>
         /// <para>
-        /// Metadata entita (RaceId, CharacterId, atd.) se naplní po uložení do databáze.
+        /// Metadata entita (Id, CharacterId, atd.) se naplní po uložení do databáze.
         /// </para>
         /// </remarks>
         /// <exception cref="OperationCanceledException">Pokud byla operace zrušena</exception>

@@ -1,27 +1,106 @@
-﻿using HoL.Domain.Helpers;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
+using HoL.Domain.Helpers;
+using HoL.Domain.ValueObjects;
 
 namespace HoL.Domain.ValueObjects
 {
-    [Owned]
+    /// <summary>
+    /// Value object reprezentující poklad entity s různými denominacemi měn.
+    /// </summary>
+    /// <remarks>
+    /// CoinQuantities se inicializuje podle CurrencyGroup.Currencies.
+    /// Každý Currencies.Level vytvoří klíč ve slovníku.
+    /// </remarks>
     public class Treasure
     {
-        public string GlobalCurrencyName { get; set; } = "Gold";
-        public int Currency1 { get; set; }
-        public int Currency2 { get; set; }
-        public int Currency3 { get; set; }
-        public int Currency4 { get; set; }
-        public int Currency5 { get; set; }
-        
-        // Foreign Key
-        public int CurrencyId { get; set; }
-        public Currency? Currency { get; set; }
+        public int Id { get; internal set; }
+        public Dictionary<int, int> CoinQuantities { get; internal set; } = new Dictionary<int, int>();
+        public int CurrencyGroupId { get; internal set; }
+        public CurrencyGroup CurrencyGroup { get; internal set; }
+
+        private Treasure()
+        {
+            CurrencyGroup = null!;
+        }
+
+        /// <summary>
+        /// Vytvoří nový Treasure s danou měnou.
+        /// </summary>
+        /// <param name="currencyGroup">Měnový systém</param>
+        public Treasure(CurrencyGroup currencyGroup) : this()
+        {
+            if (currencyGroup == null)
+                throw new ArgumentNullException(nameof(currencyGroup));
+
+            CurrencyGroup = currencyGroup;
+            CurrencyGroupId = currencyGroup.Id;
+            InitializeCoinQuantities();
+        }
+
+        /// <summary>
+        /// Interní konstruktor pro builder - vytvoří poklad s kompletními daty.
+        /// </summary>
+        internal Treasure(int id, CurrencyGroup currencyGroup, Dictionary<int, int> coinQuantities) : this(currencyGroup)
+        {
+            if (id < 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id nemůže být záporné");
+
+            Id = id;
+            CoinQuantities = new Dictionary<int, int>(coinQuantities);
+        }
+
+        /// <summary>
+        /// Inicializuje CoinQuantities podle CurrencyGroup.Currencies.
+        /// </summary>
+        private void InitializeCoinQuantities()
+        {
+            if (CurrencyGroup?.Currencies == null)
+                return;
+
+            CoinQuantities.Clear();
+            foreach (var currency in CurrencyGroup.Currencies.OrderBy(x => x.Level))
+            {
+                CoinQuantities[currency.Level] = 0;
+            }
+        }
+
+        /// <summary>
+        /// Vypočítá celkovou hodnotu v základních jednotkách (nejnižší denominace).
+        /// </summary>
+        public int GetTotalValueInBaseUnits()
+        {
+            if (CurrencyGroup?.Currencies == null)
+                return 0;
+
+            int total = 0;
+            foreach (var kvp in CoinQuantities)
+            {
+                var currency = CurrencyGroup.Currencies.FirstOrDefault(t => t.Level == kvp.Key);
+                if (currency != null)
+                {
+                    total += kvp.Value * currency.ExchangeRate;
+                }
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// Textová reprezentace pokladu s názvy mincí z CurrencyGroup.
+        /// </summary>
+        public override string ToString()
+        {
+            if (CurrencyGroup?.Currencies == null || !CoinQuantities.Any(x => x.Value > 0))
+                return "Prázdný poklad";
+
+            var parts = new List<string>();
+            foreach (var kvp in CoinQuantities.OrderByDescending(x => x.Key).Where(x => x.Value > 0))
+            {
+                var currency = CurrencyGroup.Currencies.FirstOrDefault(t => t.Level == kvp.Key);
+                var coinName = currency?.Name ?? $"Level {kvp.Key}";
+                parts.Add($"{kvp.Value} {coinName}");
+            }
+
+            return parts.Any() ? string.Join(", ", parts) : "Prázdný poklad";
+        }
     }
 }

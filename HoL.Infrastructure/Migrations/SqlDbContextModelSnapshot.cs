@@ -23,11 +23,11 @@ namespace HoL.Infrastructure.Migrations
 
             modelBuilder.Entity("HoL.Domain.Entities.Race", b =>
                 {
-                    b.Property<int>("RaceId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RaceId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BaseInitiative")
                         .ValueGeneratedOnAdd()
@@ -90,12 +90,12 @@ namespace HoL.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.HasKey("RaceId");
+                    b.HasKey("Id");
 
                     b.ToTable("Races", (string)null);
                 });
 
-            modelBuilder.Entity("HoL.Domain.Helpers.Currency", b =>
+            modelBuilder.Entity("HoL.Domain.Helpers.CurrencyGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,9 +135,9 @@ namespace HoL.Infrastructure.Migrations
 
             modelBuilder.Entity("HoL.Domain.Entities.Race", b =>
                 {
-                    b.OwnsOne("HoL.Domain.ValueObjects.Anatomi.AnatomyProfile", "BodyDimensins", b1 =>
+                    b.OwnsOne("HoL.Domain.ValueObjects.Anatomi.BodyDimension", "BodyDimensins", b1 =>
                         {
-                            b1.Property<int>("RaceId")
+                            b1.Property<int>("Id")
                                 .HasColumnType("int");
 
                             b1.Property<int>("HeihtMax")
@@ -164,17 +164,17 @@ namespace HoL.Infrastructure.Migrations
                             b1.Property<int>("WeightMin")
                                 .HasColumnType("int");
 
-                            b1.HasKey("RaceId");
+                            b1.HasKey("Id");
 
                             b1.ToTable("Races");
 
                             b1.WithOwner()
-                                .HasForeignKey("RaceId");
+                                .HasForeignKey("Id");
                         });
 
                     b.OwnsMany("HoL.Domain.ValueObjects.Anatomi.BodyPart", "BodyParts", b1 =>
                         {
-                            b1.Property<int>("RaceId")
+                            b1.Property<int>("Id")
                                 .HasColumnType("int");
 
                             b1.Property<int>("Id")
@@ -188,7 +188,7 @@ namespace HoL.Infrastructure.Migrations
                                 .HasMaxLength(500)
                                 .HasColumnType("nvarchar(500)");
 
-                            b1.Property<int>("Count")
+                            b1.Property<int>("Quantity")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
                                 .HasDefaultValue(1);
@@ -208,16 +208,16 @@ namespace HoL.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.Property<string>("Type")
+                            b1.Property<string>("BodyPartCategory")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("RaceId", "Id");
+                            b1.HasKey("Id", "Id");
 
                             b1.ToTable("RaceBodyParts", (string)null);
 
                             b1.WithOwner()
-                                .HasForeignKey("RaceId");
+                                .HasForeignKey("Id");
 
                             b1.OwnsOne("HoL.Domain.Helpers.AnatomiHelpers.BodyPartAttack", "Attack", b2 =>
                                 {
@@ -254,7 +254,7 @@ namespace HoL.Infrastructure.Migrations
                                             b3.Property<int>("Bonus")
                                                 .HasColumnType("int");
 
-                                            b3.Property<int>("Count")
+                                            b3.Property<int>("Quantity")
                                                 .HasColumnType("int");
 
                                             b3.Property<int>("Sides")
@@ -304,7 +304,7 @@ namespace HoL.Infrastructure.Migrations
 
                     b.OwnsMany("HoL.Domain.ValueObjects.SpecialAbilities", "SpecialAbilities", b1 =>
                         {
-                            b1.Property<int>("RaceId")
+                            b1.Property<int>("Id")
                                 .HasColumnType("int");
 
                             b1.Property<int>("__synthesizedOrdinal")
@@ -319,57 +319,57 @@ namespace HoL.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("RaceId", "__synthesizedOrdinal");
+                            b1.HasKey("Id", "__synthesizedOrdinal");
 
                             b1.ToTable("Races");
 
                             b1.ToJson("SpecialAbilities");
 
                             b1.WithOwner()
-                                .HasForeignKey("RaceId");
+                                .HasForeignKey("Id");
                         });
 
                     b.OwnsOne("HoL.Domain.ValueObjects.Treasure", "Treasure", b1 =>
                         {
-                            b1.Property<int>("RaceId")
+                            b1.Property<int>("Id")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("Currency1")
+                            b1.Property<int>("CurrencyAmountLevel1")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("Currency2")
+                            b1.Property<int>("CurrencyAmountLevel2")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("Currency3")
+                            b1.Property<int>("CurrencyAmountLevel3")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("Currency4")
+                            b1.Property<int>("CurrencyAmountLevel4")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("Currency5")
+                            b1.Property<int>("CurrencyAmountLevel5")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("CurrencyId")
+                            b1.Property<int>("CurrencyGroupId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("GlobalCurrencyName")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("RaceId");
+                            b1.HasKey("Id");
 
-                            b1.HasIndex("CurrencyId");
+                            b1.HasIndex("CurrencyGroupId");
 
                             b1.ToTable("Races");
 
-                            b1.HasOne("HoL.Domain.Helpers.Currency", "Currency")
+                            b1.HasOne("HoL.Domain.Helpers.CurrencyGroup", "CurrencyGroup")
                                 .WithMany()
-                                .HasForeignKey("CurrencyId");
+                                .HasForeignKey("CurrencyGroupId");
 
                             b1.WithOwner()
-                                .HasForeignKey("RaceId");
+                                .HasForeignKey("Id");
 
-                            b1.Navigation("Currency");
+                            b1.Navigation("CurrencyGroup");
                         });
 
                     b.Navigation("BodyDimensins")

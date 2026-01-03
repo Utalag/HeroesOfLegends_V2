@@ -27,13 +27,13 @@ namespace HoL.Aplication.DTOs.AnatomiDtos
     /// var scorpionTail = new BodyPartDto
     /// {
     ///     Name = "Jedový ocas",
-    ///     Type = BodyPartType.Tail,
-    ///     Count = 1,
+    ///     BodyPartCategory = BodyPartType.Tail,
+    ///     Quantity = 1,
     ///     Function = "Útok s jedem",
     ///     IsMagical = true,
     ///     Attack = new BodyPartAttackDto
     ///     {
-    ///         DamageDice = new DiceDto { Count = 1, Sides = DiceType.D8, FinalBonus = 2 },
+    ///         DamageDice = new DiceDto { Quantity = 1, Sides = DiceType.D8, FinalBonus = 2 },
     ///         DamageType = DamageType.Poison,
     ///         Initiative = 3
     ///     }

@@ -16,7 +16,7 @@ namespace HoL.Domain.Interfaces.Read_Interfaces
     ConvictionType Conviction { get; }
     Treasure Treasure { get; }
     int BaseXP { get; }
-    AnatomyProfile BodyDimensins { get; }
+    BodyDimension BodyDimensins { get; }
     Dictionary<MobilityType, int> Mobility { get; }
     int FightingSpiritNumber { get; }
     Weapon RaceWeapon { get; }
@@ -24,7 +24,7 @@ namespace HoL.Domain.Interfaces.Read_Interfaces
     int DomesticationValue { get; }
     int BaseInitiative { get; }
     List<SpecialAbilities>? SpecialAbilities { get; }
-    Dictionary<StatType, ValueRange> StatsPrimar { get; }
+    Dictionary<BodyStat, ValueRange> StatsPrimar { get; }
     Dictionary<VulnerabilityType, double> Vulnerabilities { get; set; }
     }
 

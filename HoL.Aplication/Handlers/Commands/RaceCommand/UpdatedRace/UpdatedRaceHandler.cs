@@ -54,7 +54,7 @@ namespace HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace
 
                 sw.Stop();
                 return Response<int>.Ok(
-                    data: domain.RaceId,
+                    data: domain.Id,
                     eventId: LogEventIds.CommandUpdated,
                     traceId: traceId,
                     elapsedMs: sw.ElapsedMilliseconds);

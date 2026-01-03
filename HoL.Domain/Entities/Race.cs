@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using HoL.Domain.Enums;
-using HoL.Domain.Interfaces.Read_Interfaces;
-using HoL.Domain.Interfaces.Write_Interaces;
+﻿using HoL.Domain.Enums;
 using HoL.Domain.ValueObjects;
 using HoL.Domain.ValueObjects.Anatomi;
 using HoL.Domain.ValueObjects.Anatomi.Stat;
@@ -10,40 +6,48 @@ using HoL.Domain.ValueObjects.Anatomi.Stat;
 namespace HoL.Domain.Entities
 {
 
-    public class Race //: IRace_Read, IRace_Write
+    public class Race
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RaceId { get; set; }
-        public string RaceName { get; set; } = string.Empty;
+        // optional properties
+        public int Id { get; set; }
         public string RaceDescription { get; set; } = string.Empty;
         public string RaceHistory { get; set; } = string.Empty;
-        public RaceCategory RaceCategory { get; set; }
-        public ConvictionType Conviction { get; set; }
-        public int ZSM { get; set; }
-        public int DomesticationValue { get; set; }
-        public int BaseInitiative { get; set; }
+        public ConvictionType Conviction { get; set; } = ConvictionType.Neutral;
+        public int ZSM { get; set; } = 0;
+        public int DomesticationValue { get; set; } = 0;
+        public int BaseInitiative { get; set; } = 0;
         public int BaseXP { get; set; }
-        public int FightingSpiritNumber { get; set; } = new();
-
-
+        public int FightingSpiritNumber { get; set; }
         public Treasure? Treasure { get; set; }
-        public AnatomyProfile BodyDimensins { get; set; } = new();
         public List<BodyPart>? BodyParts { get; set; }
         public List<string>? RaceHierarchySystem { get; set; }
         public List<SpecialAbilities>? SpecialAbilities { get; set; }
-        
-        // Dictionary
-        public Dictionary<StatType, ValueRange> StatsPrimar { get; set; } = new();
 
-        //public Weapon? RaceWeapon { get; set; }
+        // required properties
+        public string RaceName { get; private set; } = string.Empty;
+        public RaceCategory RaceCategory { get; private set; }
+        public BodyDimension BodyDimensins { get; private set; } = new();
 
+        public Dictionary<BodyStat, ValueRange> StatsPrimar { get; set; } = new();
         public Dictionary<VulnerabilityType, double> Vulnerabilities { get; set; } = new();
-
-      
         public Dictionary<MobilityType, int> Mobility { get; set; } = new();
 
 
+        public Race(string raceName, RaceCategory raceCategory, BodyDimension bodyDimensions)
+        {
+            RaceName = raceName;
+            RaceCategory = raceCategory;
+            BodyDimensins = bodyDimensions;
+            foreach (var enumTyp in Enum.GetValues(typeof(VulnerabilityType)))
+            {
+                Vulnerabilities.Add((VulnerabilityType)enumTyp, 1.0);
+            }
+            foreach (var enumTyp in Enum.GetValues(typeof(MobilityType)))
+            {
+                Mobility.Add((MobilityType)enumTyp, 10);
+            }
 
+        }
 
     }
 

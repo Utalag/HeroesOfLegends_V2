@@ -10,7 +10,7 @@ namespace HoL.Aplication.DTOs.EntitiDtos
     /// <summary>
     /// DTO pro entitu Race (rasa).
     /// </summary>
-    [DebuggerDisplay("(ID: {RaceId} RaceDto: {RaceName} )")]
+    [DebuggerDisplay("(ID: {Id} RaceDto: {RaceName} )")]
     public class RaceDto
     {
         public int RaceId { get; set; }
@@ -47,12 +47,12 @@ namespace HoL.Aplication.DTOs.EntitiDtos
         public int DomesticationValue { get; set; }
         public int BaseInitiative { get; set; }
         public List<SpecialAbilitiesDto> SpecialAbilities { get; set; } = new();
-        public Dictionary<StatType, ValueRangeDto> StatsPrimar { get; set; } = new();
+        public Dictionary<BodyStat, ValueRangeDto> StatsPrimar { get; set; } = new();
 
         public override string? ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"RaceId: {RaceId}");
+            sb.AppendLine($"Id: {RaceId}");
             sb.AppendLine($"RaceName: {RaceName}");
             return sb.ToString() ;
         }

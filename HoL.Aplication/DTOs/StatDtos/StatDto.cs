@@ -16,7 +16,7 @@ namespace HoL.Aplication.DTOs.StatDtos
     /// <code>
     /// var paladinCharisma = new StatDto
     /// {
-    ///     Type = StatType.Charisma,
+    ///     BodyPartCategory = BodyStat.Charisma,
     ///     RawValue = 18,           
     ///     ValueAdjustment = 1,     
     ///     FinalValue = 19,         // 18 + 1 = 19
@@ -25,14 +25,14 @@ namespace HoL.Aplication.DTOs.StatDtos
     /// };
     /// </code>
     /// </example>
-    /// <seealso cref="StatType"/>
+    /// <seealso cref="BodyStat"/>
     /// <seealso cref="StatDtoValidator"/>
     public class StatDto: IStatReadDto, IStatWriteDto
     {
         /// <summary>
         /// Typ statistiky (STR, DEX, CON, INT, WIS, CHA).
         /// </summary> 
-        public StatType Type { get; set; }
+        public BodyStat Type { get; set; }
 
         /// <summary>
         /// Základní hodnota statistiky ze stat rollu nebo point buy.

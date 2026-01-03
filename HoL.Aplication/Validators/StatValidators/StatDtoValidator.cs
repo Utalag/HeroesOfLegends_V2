@@ -13,7 +13,7 @@ namespace HoL.Aplication.Validators.StatValidators
         {
             RuleFor(x => x.Type)
                 .IsInEnum()
-                .WithMessage("Invalid StatType value");
+                .WithMessage("Invalid BodyStat value");
 
             RuleFor(x => x.RawValue)
                 .GreaterThanOrEqualTo(0)

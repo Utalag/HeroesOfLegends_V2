@@ -13,7 +13,7 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
         {
             RuleFor(x => x.page).GreaterThanOrEqualTo(1);
             RuleFor(x => x.size).InclusiveBetween(1, 100);
-            RuleFor(x => x.SortBy).Must(s => new[] { "RaceName", "RaceId", "RaceCategory" }.Contains(s))
+            RuleFor(x => x.SortBy).Must(s => new[] { "RaceName", "Id", "RaceCategory" }.Contains(s))
                                   .When(x => !string.IsNullOrWhiteSpace(x.SortBy));
             
         }
