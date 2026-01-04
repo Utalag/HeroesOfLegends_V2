@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HoL.Domain.Helpers.AnatomiHelpers
+namespace HoL.Domain.ValueObjects.Anatomi.Body
 {
     public class BodyPartDefense
     {

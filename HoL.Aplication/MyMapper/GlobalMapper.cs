@@ -4,9 +4,8 @@ using HoL.Aplication.DTOs.StatDtos;
 using HoL.Aplication.DTOs.ValueObjectDtos;
 using HoL.Domain.Entities;
 using HoL.Domain.Helpers;
-using HoL.Domain.Helpers.AnatomiHelpers;
 using HoL.Domain.ValueObjects;
-using HoL.Domain.ValueObjects.Anatomi;
+using HoL.Domain.ValueObjects.Anatomi.Body;
 using HoL.Domain.ValueObjects.Anatomi.Stat;
 
 namespace HoL.Aplication.MyMapper

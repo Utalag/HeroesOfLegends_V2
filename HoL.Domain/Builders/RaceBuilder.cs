@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HoL.Domain.Entities;
 using HoL.Domain.Enums;
 using HoL.Domain.ValueObjects;
-using HoL.Domain.ValueObjects.Anatomi;
+using HoL.Domain.ValueObjects.Anatomi.Body;
 using HoL.Domain.ValueObjects.Anatomi.Stat;
 
 namespace HoL.Domain.Builders

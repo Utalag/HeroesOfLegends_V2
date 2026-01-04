@@ -1,8 +1,6 @@
-﻿using HoL.Domain.Builders;
-using HoL.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
+﻿using HoL.Domain.Enums;
 
-namespace HoL.Domain.ValueObjects.Anatomi
+namespace HoL.Domain.ValueObjects.Anatomi.Body
 {
     /// <summary>
     /// Profil anatomie rasy/postavy s hierarchickou strukturou tělesných částí.
@@ -12,14 +10,14 @@ namespace HoL.Domain.ValueObjects.Anatomi
     public class BodyDimension
     {
         // Základní tělesné rozměry
-        public RaceSize RaceSize    { get; private set; }
-        public int WeightMin        { get; private set; }
-        public int WeightMax        { get; private set; }
-        public int LengthMin        { get; private set; }
-        public int LengthMax        { get; private set; }
-        public int HeihtMin         { get; private set; }
-        public int HeihtMax         { get; private set; }
-        public int MaxAge           { get; private set; }
+        public RaceSize RaceSize { get; private set; }
+        public int WeightMin { get; private set; }
+        public int WeightMax { get; private set; }
+        public int LengthMin { get; private set; }
+        public int LengthMax { get; private set; }
+        public int HeihtMin { get; private set; }
+        public int HeihtMax { get; private set; }
+        public int MaxAge { get; private set; }
 
         public BodyDimension WithRaceSize(RaceSize raceSize)
         {

@@ -1,7 +1,6 @@
 ﻿using HoL.Domain.Enums;
-using HoL.Domain.Helpers.AnatomiHelpers;
 
-namespace HoL.Domain.ValueObjects.Anatomi
+namespace HoL.Domain.ValueObjects.Anatomi.Body
 {
 
     public class BodyPart

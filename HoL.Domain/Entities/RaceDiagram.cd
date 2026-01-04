@@ -1,164 +1,117 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="HoL.Domain.Entities.Race">
-    <Position X="9" Y="4" Width="3.75" />
-    <TypeIdentifier>
-      <HashCode>gCAAAAIEBAAAAQUkAAAIAACAAAIQACAAABAIEAAAAAA=</HashCode>
-      <FileName>Entities\Race.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="BodyDimensins" />
-      <Property Name="Conviction" />
-      <Property Name="FightingSpirit" />
-      <Property Name="RaceCategory" />
-      <Property Name="RaceWeapon" />
-      <Property Name="Treasure" />
-      <Property Name="Vulnerability" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="SpecialAbilities" />
-    </ShowAsCollectionAssociation>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="HoL.Domain.ValueObjects.Anatomi.AnatomyProfile">
-    <Position X="12" Y="8.25" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAAAAAEAgAQgAAAAAAAAAAAAAYAEAAAg=</HashCode>
-      <FileName>ValueObjects\Anatomi\AnatomyProfile.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="RaceSize" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="BodyParts" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="HoL.Domain.ValueObjects.FightingSpirit">
-    <Position X="7.5" Y="1.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ValueObjects\FightingSpirit.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="HoL.Domain.ValueObjects.Weapon">
-    <Position X="13.5" Y="2" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ValueObjects\Weapon.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="HoL.Domain.ValueObjects.Currency">
-    <Position X="10.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAE=</HashCode>
-      <FileName>ValueObjects\Currency.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="HoL.Domain.ValueObjects.VulnerabilityProfil">
-    <Position X="4.5" Y="7.5" Width="4" />
-    <TypeIdentifier>
-      <HashCode>ARAAAAEAAAACBACAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ValueObjects\VulnerabilityProfil.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Immunities" />
-    </ShowAsCollectionAssociation>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="HoL.Domain.ValueObjects.Anatomi.BodyPart">
-    <Position X="16" Y="8" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAYAAIAAAAAAAQAAAgAAAEA=</HashCode>
-      <FileName>ValueObjects\Anatomi\BodyPart.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Attack" />
-      <Property Name="Defense" />
-      <Property Name="Type" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="HoL.Domain.Helpers.AnatomiHelpers.BodyPartAttack">
-    <Position X="19.75" Y="8.25" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAAABAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAA=</HashCode>
-      <FileName>ValueObjects\Anatomi\BodyPartAttack.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="DamageDice" />
-      <Property Name="DamageType" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="HoL.Domain.Helpers.AnatomiHelpers.BodyPartDefense">
-    <Position X="16.25" Y="10.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>ACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>ValueObjects\Anatomi\BodyPartDefense.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="HoL.Domain.Helpers.Dice">
-    <Position X="23.75" Y="8" Width="1.5" />
+    <Position X="0.75" Y="6.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAACAAAAQAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAEAAQAAAAAAAQACgAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Helpers\Dice.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Sides" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="HoL.Domain.ValueObjects.SpecialAbilities">
-    <Position X="9.25" Y="10.75" Width="2.25" />
+    <Position X="8.25" Y="2.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>ValueObjects\SpecialAbilities.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="HoL.Domain.Entities.Race">
+    <Position X="12.5" Y="5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>gGACAAEEBAAAAQUgAAAIIACAAAIQACAAAAAAEAAAAAA=</HashCode>
+      <FileName>Entities\Race.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Treasure" />
+      <Property Name="BodyDimensins" />
+      <Property Name="Conviction" />
+      <Property Name="RaceCategory" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="BodyParts" />
+      <Property Name="SpecialAbilities" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyDimension">
+    <Position X="18.25" Y="2" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAIAAAEAAAQAAAAAABCAAABAAYAEQAAg=</HashCode>
+      <FileName>ValueObjects\AnatomiObjects\BodyObjects\BodyDimension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPart">
+    <Position X="8" Y="5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIABAAAAAIAAAAAAAAAEAYAAIAAgIAQAAAgwgAAAEA=</HashCode>
+      <FileName>ValueObjects\AnatomiObjects\BodyObjects\BodyPart.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Attack" />
+      <Property Name="Defense" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HoL.Domain.ValueObjects.Treasure">
+    <Position X="18.25" Y="7" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEkAAAAAAAAAAAAAACIAAAAAIAAAA=</HashCode>
+      <FileName>ValueObjects\Treasure.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrencyGroup" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HoL.Domain.Helpers.CurrencyGroup">
+    <Position X="22.75" Y="7" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAEE=</HashCode>
+      <FileName>ValueObjects\CurrencyObjects\CurrencyGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_currencies" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPartDefense">
+    <Position X="3.75" Y="3.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ACAQAAAAAAAAAAAAQAAAAAEAAAAAAAARAAAAAAAAAAA=</HashCode>
+      <FileName>ValueObjects\AnatomiObjects\BodyObjects\BodyPartDefense.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPartAttack">
+    <Position X="3.75" Y="6.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAABAAAAAAAAAAAgAAAAAAAAAAAAIAAggBA=</HashCode>
+      <FileName>ValueObjects\AnatomiObjects\BodyObjects\BodyPartAttack.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DamageDice" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HoL.Domain.ValueObjects.CurrencyObjects.SingleCurrency">
+    <Position X="27.75" Y="7" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAgAAAAIAIEAAAAAAQAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>ValueObjects\CurrencyObjects\SingleCurrency.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Enum Name="HoL.Domain.Enums.ConvictionType">
-    <Position X="5" Y="5" Width="1.5" />
+    <Position X="15" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAIAAAAgAIAAAAAAE=</HashCode>
       <FileName>Enums\ConvictionType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="HoL.Domain.Enums.RaceCategory">
-    <Position X="5" Y="0.75" Width="1.5" />
+    <Position X="13" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAQAAAAAAIAgQAgBAAGQAAAAAQAAAASAAABAAAgIAA=</HashCode>
       <FileName>Enums\RaceCategory.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="HoL.Domain.Enums.RaceSize">
-    <Position X="12.5" Y="11" Width="1.5" />
+  <Enum Name="HoL.Domain.Enums.BodyStat">
+    <Position X="11" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAtgEAAAA=</HashCode>
-      <FileName>Enums\RaceSize.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="HoL.Domain.Enums.BodyPartType">
-    <Position X="17" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>BAAAIAAAEAAAAJCAAAAAAAAAIAAAAIAEAAACAAQAAAA=</HashCode>
-      <FileName>Enums\BodyPartType.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="HoL.Domain.Enums.VulnerabilityType">
-    <Position X="2" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAAAAQAAQBAIAAAAAABAAACA4ABAAAAAAEAAAAAIE=</HashCode>
-      <FileName>Enums\VulnerabilityType.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="HoL.Domain.Enums.DamageType">
-    <Position X="20.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAkAAAGEAAAEwAQACAAQAAMAAIEAACFAAQIIAA=</HashCode>
-      <FileName>Enums\DamageType.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="HoL.Domain.Enums.DiceType">
-    <Position X="23.75" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAgAAAAQAAAAAAAIAAAAAAEEAAA=</HashCode>
-      <FileName>Enums\DiceType.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAEBAEAAAABAABBAAAAAAACAAAAAACA=</HashCode>
+      <FileName>Enums\BodyStat.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

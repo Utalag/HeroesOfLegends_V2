@@ -5,12 +5,11 @@ using HoL.Aplication.DTOs.AnatomiDtos;
 using HoL.Aplication.DTOs.StatDtos;
 using HoL.Domain.Entities;
 using HoL.Domain.ValueObjects;
-using HoL.Domain.ValueObjects.Anatomi;
 using HoL.Domain.Helpers;
-using HoL.Domain.Helpers.AnatomiHelpers;
 using HoL.Domain.Interfaces.Read_Interfaces;
 using HoL.Domain.Interfaces.Write_Interaces;
 using HoL.Domain.ValueObjects.Anatomi.Stat;
+using HoL.Domain.ValueObjects.Anatomi.Body;
 
 namespace HoL.Aplication.MyMapper
 {

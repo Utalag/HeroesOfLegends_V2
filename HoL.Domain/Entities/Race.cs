@@ -1,6 +1,6 @@
 ﻿using HoL.Domain.Enums;
 using HoL.Domain.ValueObjects;
-using HoL.Domain.ValueObjects.Anatomi;
+using HoL.Domain.ValueObjects.Anatomi.Body;
 using HoL.Domain.ValueObjects.Anatomi.Stat;
 
 namespace HoL.Domain.Entities
@@ -9,28 +9,28 @@ namespace HoL.Domain.Entities
     public class Race
     {
         // optional properties
-        public int Id { get; set; }
-        public string RaceDescription { get; set; } = string.Empty;
-        public string RaceHistory { get; set; } = string.Empty;
-        public ConvictionType Conviction { get; set; } = ConvictionType.Neutral;
-        public int ZSM { get; set; } = 0;
-        public int DomesticationValue { get; set; } = 0;
-        public int BaseInitiative { get; set; } = 0;
-        public int BaseXP { get; set; }
-        public int FightingSpiritNumber { get; set; }
-        public Treasure? Treasure { get; set; }
-        public List<BodyPart>? BodyParts { get; set; }
-        public List<string>? RaceHierarchySystem { get; set; }
-        public List<SpecialAbilities>? SpecialAbilities { get; set; }
+        public int Id { get; internal set; }
+        public string RaceDescription { get; internal set; } = string.Empty;
+        public string RaceHistory { get; internal set; } = string.Empty;
+        public ConvictionType Conviction { get; internal set; } = ConvictionType.Neutral;
+        public int ZSM { get; internal set; } = 0;
+        public int DomesticationValue { get; internal set; } = 0;
+        public int BaseInitiative { get; internal set; } = 0;
+        public int BaseXP { get; internal set; }
+        public int FightingSpiritNumber { get; internal set; }
+        public Treasure? Treasure { get; internal set; }
+        public List<BodyPart>? BodyParts { get; internal set; }
+        public List<string>? RaceHierarchySystem { get; internal set; }
+        public List<SpecialAbilities>? SpecialAbilities { get; internal set; }
 
         // required properties
-        public string RaceName { get; private set; } = string.Empty;
-        public RaceCategory RaceCategory { get; private set; }
-        public BodyDimension BodyDimensins { get; private set; } = new();
+        public string RaceName { get; internal set; } = string.Empty;
+        public RaceCategory RaceCategory { get; internal set; }
+        public BodyDimension BodyDimensins { get; internal set; } = new();
 
-        public Dictionary<BodyStat, ValueRange> StatsPrimar { get; set; } = new();
-        public Dictionary<VulnerabilityType, double> Vulnerabilities { get; set; } = new();
-        public Dictionary<MobilityType, int> Mobility { get; set; } = new();
+        public Dictionary<BodyStat, ValueRange> StatsPrimar { get; internal set; } = new();
+        public Dictionary<VulnerabilityType, double> Vulnerabilities { get; internal set; } = new();
+        public Dictionary<MobilityType, int> Mobility { get; internal set; } = new();
 
 
         public Race(string raceName, RaceCategory raceCategory, BodyDimension bodyDimensions)
