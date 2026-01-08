@@ -1,24 +1,19 @@
-﻿using HoL.Domain.Helpers;
-using HoL.Domain.ValueObjects;
-using HoL.Domain.ValueObjects.CurrencyObjects;
+﻿using HoL.Domain.Entities.CurencyEntities;
 
 namespace HoL.DomainTest.DefaultData
 {
     public static class ArrangeData
     {
-        //public static CurrencyGroup ArrangeCurrencGroup()
-        //{
-        //    var gold = new SingleCurrency("Gold", "zl", 1, 1);
-        //    var silver = new SingleCurrency("Silver", "st", 2, 10);
-        //    var copper = new SingleCurrency("Copper", "md", 3, 100);
+        public static CurrencyGroup ArrangeCurrencGroup()
+        {
+            var arrangeGold = new SingleCurrency("Gold", "zl", 1, 1);
+            var arrangeSilver = new SingleCurrency("Silver", "st", 2, 10);
+            var arrangeCopper = new SingleCurrency("Copper", "md", 3, 100);
 
-        //    var currencyGroup = new CurrencyGroup("Gold");
-        //    currencyGroup.Add(gold);
-        //    currencyGroup.Add(silver);
-        //    currencyGroup.Add(copper);
+            var currencyGroup = new CurrencyGroup("FantasyCoins", new() {arrangeGold,arrangeSilver,arrangeCopper });
 
-        //    return currencyGroup;
-        //}
+            return currencyGroup;
+        }
 
         //public static Treasure ArrangeTreasure()
         //{

@@ -21,10 +21,10 @@
       <FileName>Entities\Race.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Treasure" />
-      <Property Name="BodyDimensins" />
       <Property Name="Conviction" />
+      <Property Name="Treasure" />
       <Property Name="RaceCategory" />
+      <Property Name="BodyDimensins" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="BodyParts" />
@@ -59,16 +59,6 @@
       <Property Name="CurrencyGroup" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="HoL.Domain.Helpers.CurrencyGroup">
-    <Position X="22.75" Y="7" Width="3.25" />
-    <TypeIdentifier>
-      <HashCode>AAADAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAEE=</HashCode>
-      <FileName>ValueObjects\CurrencyObjects\CurrencyGroup.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Field Name="_currencies" />
-    </ShowAsCollectionAssociation>
-  </Class>
   <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPartDefense">
     <Position X="3.75" Y="3.25" Width="2.75" />
     <TypeIdentifier>
@@ -86,11 +76,21 @@
       <Property Name="DamageDice" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="HoL.Domain.ValueObjects.CurrencyObjects.SingleCurrency">
-    <Position X="27.75" Y="7" Width="2.5" />
+  <Class Name="HoL.Domain.Entities.CurencyEntities.CurrencyGroup">
+    <Position X="23.5" Y="7" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAACAAAgAAAAIAIEAAAAAAQAAAAAAAABAAAAAAAAAAA=</HashCode>
-      <FileName>ValueObjects\CurrencyObjects\SingleCurrency.cs</FileName>
+      <HashCode>AAADAAAQAAAAAAAAAAAACAAAgAAAAAAAAAAAAAAAAEE=</HashCode>
+      <FileName>Entities\CurrencyEntities\CurrencyGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Currencies" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HoL.Domain.Entities.CurencyEntities.SingleCurrency">
+    <Position X="28.75" Y="7" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAgAAAAIAIEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CurrencyEntities\SingleCurrency.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="HoL.Domain.Enums.ConvictionType">

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace HoL.Domain.ValueObjects.CurrencyObjects
+namespace HoL.Domain.Entities.CurencyEntities
 {
     /// <summary>
     /// Reprezentuje jednu hodnotu měny.
@@ -23,7 +23,7 @@ namespace HoL.Domain.ValueObjects.CurrencyObjects
         /// <summary>
         /// Úroveň (1 = nejvyšší hodnat, vyšší číslo = nižší hodnota).
         /// </summary>
-        public int Level { get; private set; }
+        public int HierarchyLevel { get; private set; }
 
         /// <summary>
         /// Směnný kurz vůči základní denominaci.
@@ -60,7 +60,7 @@ namespace HoL.Domain.ValueObjects.CurrencyObjects
 
             Name = name;
             ShotName = shortName;
-            Level = level;
+            HierarchyLevel = level;
             ExchangeRate = exchangeRate;
         }
 
@@ -78,7 +78,7 @@ namespace HoL.Domain.ValueObjects.CurrencyObjects
 
         public override string ToString()
         {
-            return $"{Id}, {Level}, {ShotName}, {Name}, {ExchangeRate}";
+            return $"{Id}, {HierarchyLevel}, {ShotName}, {Name}, {ExchangeRate}";
         }
     }
 }

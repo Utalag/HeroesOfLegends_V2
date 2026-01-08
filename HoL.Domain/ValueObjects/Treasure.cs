@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using HoL.Domain.Entities.CurencyEntities;
 using HoL.Domain.Helpers;
 using HoL.Domain.ValueObjects;
 
@@ -9,7 +10,7 @@ namespace HoL.Domain.ValueObjects
     /// </summary>
     /// <remarks>
     /// CoinQuantities se inicializuje podle CurrencyGroup.Currencies.
-    /// Každý Currencies.Level vytvoří klíč ve slovníku.
+    /// Každý Currencies.HierarchyLevel vytvoří klíč ve slovníku.
     /// </remarks>
     public class Treasure
     {
@@ -58,9 +59,9 @@ namespace HoL.Domain.ValueObjects
                 return;
 
             CoinQuantities.Clear();
-            foreach (var currency in CurrencyGroup.Currencies.OrderBy(x => x.Level))
+            foreach (var currency in CurrencyGroup.Currencies.OrderBy(x => x.HierarchyLevel))
             {
-                CoinQuantities[currency.Level] = 0;
+                CoinQuantities[currency.HierarchyLevel] = 0;
             }
         }
 
@@ -75,7 +76,7 @@ namespace HoL.Domain.ValueObjects
             int total = 0;
             foreach (var kvp in CoinQuantities)
             {
-                var currency = CurrencyGroup.Currencies.FirstOrDefault(t => t.Level == kvp.Key);
+                var currency = CurrencyGroup.Currencies.FirstOrDefault(t => t.HierarchyLevel== kvp.Key);
                 if (currency != null)
                 {
                     total += kvp.Value * currency.ExchangeRate;
@@ -95,8 +96,8 @@ namespace HoL.Domain.ValueObjects
             var parts = new List<string>();
             foreach (var kvp in CoinQuantities.OrderByDescending(x => x.Key).Where(x => x.Value > 0))
             {
-                var currency = CurrencyGroup.Currencies.FirstOrDefault(t => t.Level == kvp.Key);
-                var coinName = currency?.Name ?? $"Level {kvp.Key}";
+                var currency = CurrencyGroup.Currencies.FirstOrDefault(t => t.HierarchyLevel== kvp.Key);
+                var coinName = currency?.Name ?? $"HierarchyLevel {kvp.Key}";
                 parts.Add($"{kvp.Value} {coinName}");
             }
 

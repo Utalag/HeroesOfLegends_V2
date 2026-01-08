@@ -1,7 +1,4 @@
-﻿using System.Reflection.Emit;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml.Linq;
-using HoL.Domain.ValueObjects.CurrencyObjects;
+﻿using HoL.Domain.Entities.CurencyEntities;
 using Xunit;
 
 namespace HoL.DomainTest.ClassTested;
@@ -13,7 +10,7 @@ public class SingleCurrency_Test
     {
         var currency = new SingleCurrency("Galeon", "gl", 1, 1);
 
-        Assert.Equal(1, currency.Level);
+        Assert.Equal(1, currency.HierarchyLevel);
         Assert.Equal("Galeon", currency.Name);
         Assert.Equal("gl", currency.ShotName);
         Assert.Equal(1, currency.ExchangeRate);

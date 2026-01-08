@@ -1,4 +1,5 @@
-﻿using HoL.Domain.Helpers;
+﻿using HoL.Domain.Entities.CurencyEntities;
+using HoL.Domain.Helpers;
 using HoL.Domain.ValueObjects;
 
 namespace HoL.Domain.Builders
@@ -44,18 +45,6 @@ namespace HoL.Domain.Builders
         }
 
         /// <summary>
-        /// Nastaví měnový systém pomocí builderu.
-        /// </summary>
-        public TreasureBuilder WithCurrencyGroup(CurrencyGroupBuilder currencyGroupBuilder)
-        {
-            if (currencyGroupBuilder == null)
-                throw new ArgumentNullException(nameof(currencyGroupBuilder));
-
-            _currencyGroup = currencyGroupBuilder.Build();
-            return this;
-        }
-
-        /// <summary>
         /// Nastaví měnový systém přímo.
         /// </summary>
         public TreasureBuilder WithCurrencyGroup(CurrencyGroup currencyGroup)
@@ -74,7 +63,7 @@ namespace HoL.Domain.Builders
         /// <summary>
         /// Nastaví množství mincí pro daný level.
         /// </summary>
-        /// <param name="level">Level měny</param>
+        /// <param name="level">HierarchyLevel měny</param>
         /// <param name="amount">Množství mincí (0 nebo více)</param>
         /// <returns>Builder instance pro fluent API</returns>
         /// <exception cref="ArgumentOutOfRangeException">Pokud je množství záporné</exception>
@@ -90,7 +79,7 @@ namespace HoL.Domain.Builders
         /// <summary>
         /// Přidá množství mincí k existujícímu množství na daném levelu.
         /// </summary>
-        /// <param name="level">Level měny</param>
+        /// <param name="level">HierarchyLevel měny</param>
         /// <param name="amount">Množství mincí k přidání</param>
         /// <returns>Builder instance pro fluent API</returns>
         /// <exception cref="ArgumentOutOfRangeException">Pokud je množství záporné</exception>
@@ -109,7 +98,7 @@ namespace HoL.Domain.Builders
         /// <summary>
         /// Vymaže množství mincí na daném levelu (nastaví na 0).
         /// </summary>
-        /// <param name="level">Level měny</param>
+        /// <param name="level">HierarchyLevel měny</param>
         /// <returns>Builder instance pro fluent API</returns>
         public TreasureBuilder ClearCoinQuantityAtLevel(int level)
         {
