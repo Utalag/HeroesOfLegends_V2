@@ -160,12 +160,12 @@ namespace HoL.Domain.Builders
         /// <summary>
         /// Přidá poklad.
         /// </summary>
-        public RaceBuilder WithTreasure(TreasureBuilder treasure)
+        public RaceBuilder WithTreasure(Treasure treasure)
         {
             if (treasure == null)
                 throw new ArgumentNullException(nameof(treasure));
 
-            _treasure = treasure.Build();
+            _treasure = treasure;
             return this;
         } //✅
 

@@ -1,12 +1,4 @@
-﻿using HoL.Domain.Entities;
-using HoL.Domain.Enums;
-using HoL.Domain.ValueObjects;
-using HoL.Domain.ValueObjects.Anatomi;
-using HoL.Domain.ValueObjects.Anatomi.Stat;
-using HoL.Domain.Helpers.AnatomiHelpers;
-using HoL.Domain.Helpers;
-
-namespace AplicationTest.ArrangeData
+﻿namespace AplicationTest.ArrangeData
 {
     internal static class RaceArrange
     {
@@ -82,7 +74,7 @@ namespace AplicationTest.ArrangeData
         //    };
         //    return elf;
         //}
-    
+
 
         //public static Race Arrange_Dragon()
         //{

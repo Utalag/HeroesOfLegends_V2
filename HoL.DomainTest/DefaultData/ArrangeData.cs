@@ -1,4 +1,5 @@
 ﻿using HoL.Domain.Entities.CurencyEntities;
+using HoL.Domain.ValueObjects;
 
 namespace HoL.DomainTest.DefaultData
 {
@@ -11,18 +12,18 @@ namespace HoL.DomainTest.DefaultData
             var arrangeCopper = new SingleCurrency("Copper", "md", 3, 100);
 
             var currencyGroup = new CurrencyGroup("FantasyCoins", new() {arrangeGold,arrangeSilver,arrangeCopper });
-
+            //currencyGroup.SetId(1);
             return currencyGroup;
         }
 
-        //public static Treasure ArrangeTreasure()
-        //{
-        //    CurrencyGroup currencyGroup = ArrangeCurrencGroup();
-        //    var treasure = new Treasure(currencyGroup);
-        //    treasure.Add(1, 50);  // 50 Gold
-        //    treasure.Add(2, 200); // 200 Silver
-        //    treasure.Add(3, 500); // 500 Copper
-        //    return treasure;
-        //}
+        public static Treasure ArrangeTreasure()
+        {
+            CurrencyGroup currencyGroup = ArrangeCurrencGroup();
+            var treasure = new Treasure(currencyGroup)
+                .AddCoins(1,50)
+                .AddCoins(2,75)
+                .AddCoins(3,10);
+            return treasure;
+        }
     }
 }

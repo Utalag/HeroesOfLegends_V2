@@ -1,4 +1,4 @@
-﻿using HoL.Domain.Helpers;
+﻿using HoL.Domain.Entities.CurencyEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,7 +17,7 @@ namespace HoL.Infrastructure.Data.ModelConfigurations
             //builder.Property(c => c.Currency3Name).IsRequired().HasMaxLength(50);
             //builder.Property(c => c.Currency4Name).IsRequired().HasMaxLength(50);
             //builder.Property(c => c.Currency5Name).IsRequired().HasMaxLength(50);
-           
+
         }
     }
 }

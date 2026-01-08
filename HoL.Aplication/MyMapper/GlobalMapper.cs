@@ -3,6 +3,7 @@ using HoL.Aplication.DTOs.EntitiDtos;
 using HoL.Aplication.DTOs.StatDtos;
 using HoL.Aplication.DTOs.ValueObjectDtos;
 using HoL.Domain.Entities;
+using HoL.Domain.Entities.CurencyEntities;
 using HoL.Domain.Helpers;
 using HoL.Domain.ValueObjects;
 using HoL.Domain.ValueObjects.Anatomi.Body;
