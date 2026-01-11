@@ -25,7 +25,6 @@ namespace HoL.Aplication.MyMapper
             // Value Objects
             Map_Treasure();
             Map_SpecialAbilities();
-            Map_Weapon();
 
 
             // Anatomy
@@ -63,12 +62,6 @@ namespace HoL.Aplication.MyMapper
         {
             CreateMap<SpecialAbilities, SpecialAbilitiesDto>();
             CreateMap<SpecialAbilitiesDto, SpecialAbilities>();
-        }
-
-        private void Map_Weapon()
-        {
-            CreateMap<Weapon, WeaponDto>();
-            CreateMap<WeaponDto, Weapon>();
         }
 
 

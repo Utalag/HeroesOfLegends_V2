@@ -1,7 +1,7 @@
 ﻿using HoL.Aplication.Handlers.Responses;
-using HoL.Contracts;
 using HoL.Domain.Entities;
 using HoL.Domain.LogMessages;
+using HoL.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace HeroesOfLegends.Application.Handlers.Commands.RaceCommand.CreatedRace

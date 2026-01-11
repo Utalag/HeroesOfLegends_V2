@@ -1,4 +1,5 @@
-﻿using HoL.Contracts;
+﻿using System.Diagnostics;
+using System.Linq.Expressions;
 using HoL.Domain.Enums.Logging;
 using HoL.Domain.LogMessages;
 using HoL.Infrastructure.Data;
@@ -6,12 +7,10 @@ using HoL.Infrastructure.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
-using System.Linq.Expressions;
 
 namespace HoL.Infrastructure.Repositories
 {
-    public abstract class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey>
+    public abstract class GenericRepository<TEntity, TKey> //: IGenericRepository<TEntity, TKey>
         where TEntity : class
     {
         protected readonly SqlDbContext db;

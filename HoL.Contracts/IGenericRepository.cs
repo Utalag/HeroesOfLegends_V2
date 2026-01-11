@@ -15,7 +15,7 @@
         /// <param name="entity">Entita k přidání (nesmí být null)</param>
         /// <param name="cancellationToken">Token pro zrušení operace</param>
         /// <returns>Přidaná entita s nastaveným primárním klíčem</returns>
-        Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<int> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Aktualizuje existující entitu v databázi.

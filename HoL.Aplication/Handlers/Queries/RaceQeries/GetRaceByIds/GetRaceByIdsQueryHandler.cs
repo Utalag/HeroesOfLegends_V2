@@ -1,9 +1,9 @@
-﻿using HoL.Aplication.DTOs.EntitiDtos;
+﻿using System.Diagnostics;
+using HoL.Aplication.DTOs.EntitiDtos;
 using HoL.Aplication.Handlers.Responses;
-using HoL.Contracts;
 using HoL.Domain.LogMessages;
+using HoL.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System.Diagnostics;
 
 namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetRaceByIds
 {

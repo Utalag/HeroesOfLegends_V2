@@ -1,8 +1,8 @@
 ﻿using HoL.Aplication.Handlers.Responses;
-using HoL.Contracts;
 using HoL.Domain.Entities;
 using HoL.Domain.Enums.Logging;
 using HoL.Domain.LogMessages;
+using HoL.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace HoL.Aplication.Handlers.Commands.RaceCommand.UpdatedRace

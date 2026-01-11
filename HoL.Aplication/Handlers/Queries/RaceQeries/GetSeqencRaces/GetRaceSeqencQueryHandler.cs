@@ -1,9 +1,9 @@
+using System.Diagnostics;
 using HoL.Aplication.DTOs.EntitiDtos;
 using HoL.Aplication.Handlers.Responses;
-using HoL.Contracts;
 using HoL.Domain.LogMessages;
+using HoL.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System.Diagnostics;
 
 namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
 {
@@ -28,12 +28,12 @@ namespace HoL.Aplication.Handlers.Queries.RaceQeries.GetSeqencRaces
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                
+
                 var races = await _repository.GetBySeqencAsync(
                     request.page,
                     request.size,
                     request.SortBy,
-                    request.SortDir.ToString().ToLower(),
+                    request.SortDir,
                     cancellationToken);
 
                 if (!races.Any())

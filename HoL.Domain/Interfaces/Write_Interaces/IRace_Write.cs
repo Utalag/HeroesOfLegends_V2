@@ -14,12 +14,11 @@ namespace HoL.Domain.Interfaces.Write_Interaces
         RaceCategory RaceCategory { get; set; }
         List<string>? RaceHierarchySystem { get; set; }
         ConvictionType Conviction { get; set; }
-        Treasure Treasure { get; set; }
+        Treasure? Treasure { get; set; }
         int BaseXP { get; set; }
         BodyDimension BodyDimensins { get; set; }
         Dictionary<MobilityType, int> Mobility { get; }
         int FightingSpiritNumber { get; set; }
-        Weapon RaceWeapon { get; set; }
         int ZSM { get; set; }
         int DomesticationValue { get; set; }
         int BaseInitiative { get; set; }

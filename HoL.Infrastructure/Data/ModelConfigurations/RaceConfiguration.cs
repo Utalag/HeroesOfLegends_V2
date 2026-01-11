@@ -2,15 +2,16 @@ using HoL.Domain.Entities;
 using HoL.Domain.Enums;
 using HoL.Domain.ValueObjects.Anatomi;
 using HoL.Domain.ValueObjects.Anatomi.Stat;
+using HoL.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json;
 
 namespace HoL.Infrastructure.Data.ModelConfigurations
 {
-    public class RaceConfiguration : IEntityTypeConfiguration<Race>
+    public class RaceConfiguration : IEntityTypeConfiguration<RaceDbModel>
     {
-        public void Configure(EntityTypeBuilder<Race> builder)
+        public void Configure(EntityTypeBuilder<RaceDbModel> builder)
         {
             builder.ToTable("Races");
             builder.HasKey(r => r.Id);
@@ -28,88 +29,70 @@ namespace HoL.Infrastructure.Data.ModelConfigurations
             builder.Property(r => r.BaseXP).IsRequired();
             builder.Property(r => r.FightingSpiritNumber).HasDefaultValue(0);
 
-            // Configure RaceHierarchySystem as owned collection
-            builder.Property(r => r.RaceHierarchySystem)
-                .HasColumnType("nvarchar(100)");
-
-
-            // Configure BodyDimension as owned entity
-            builder.OwnsOne(r => r.BodyDimensins);
-
-            // Configure BodyParts collection
-            builder.OwnsMany(r => r.BodyParts, bodyPart =>
+            // Owned Entity - BodyDimensions
+            builder.OwnsOne(r => r.BodyDimensins, bd =>
             {
-                bodyPart.ToTable("RaceBodyParts");
-                bodyPart.WithOwner().HasForeignKey("Id");
-
-                bodyPart.Property(bp => bp.Name)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                bodyPart.Property(bp => bp.BodyPartCategory)
-                    .IsRequired()
-                    .HasConversion<string>();
-
-                bodyPart.Property(bp => bp.Quantity)
-                    .HasDefaultValue(1);
-
-                bodyPart.Property(bp => bp.Function)
-                    .HasMaxLength(500);
-
-                bodyPart.Property(bp => bp.Appearance)
-                    .HasMaxLength(500);
-
-                bodyPart.Property(bp => bp.IsMagical)
-                    .HasDefaultValue(false);
-
-
-                bodyPart.OwnsOne(at=>at.Attack, attack =>
-                {
-                    attack.OwnsOne(a => a.DamageDice);
-                });
-                bodyPart.OwnsOne(df => df.Defense);
-
-              
+                bd.Property(b => b.RaceSize).IsRequired().HasMaxLength(10);
+                bd.Property(b => b.WeightMin).IsRequired();
+                bd.Property(b => b.WeightMax).IsRequired();
+                bd.Property(b => b.LengthMin).IsRequired();
+                bd.Property(b => b.LengthMax).IsRequired();
+                bd.Property(b => b.HeightMin).IsRequired();
+                bd.Property(b => b.HeightMax).IsRequired();
+                bd.Property(b => b.MaxAge).IsRequired();
             });
 
-
-            // Configure SpecialAbilities collection
-            builder.OwnsMany(sa=>sa.SpecialAbilities).ToJson();
-
-            // Configure Treasure as owned entity
-            builder.OwnsOne(cu => cu.Treasure, treasure=>
+            // Owned Entity - Treasure (optional)
+            builder.OwnsOne(r => r.Treasure, t =>
             {
-                treasure.HasOne(t=>t.CurrencyGroup)
-                .WithMany()
-                .HasForeignKey(t=>t.CurrencyGroupId)
-                .IsRequired(false);
+                t.Property(tr => tr.CoinQuantitiesJson)
+                    .HasColumnName("treasure_CoinQuantities")
+                    .HasColumnType("nvarchar(max)");
+                
+                t.Property(tr => tr.CurrencyId)
+                    .HasColumnName("treasure_CurrencyId");
+
+                // Navigační vlastnost na CurrencyGroup
+                t.HasOne(tr => tr.CurrencyGroup)
+                    .WithMany()
+                    .HasForeignKey(tr => tr.CurrencyId)
+                    .OnDelete(DeleteBehavior.Restrict); // Pokud se smaže CurrencyGroup, nemazat Race
             });
 
-            // Configure StatsPrimar as a JSON column
-            // Configure StatsPrimar as JSON
-            builder.Property(r => r.StatsPrimar)
+            // JSON Serialized Collections
+            builder.Property(r => r.JsonBodyParts)
+                .HasColumnName("bodyParts")
                 .HasColumnType("nvarchar(max)")
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                    v => JsonSerializer.Deserialize<Dictionary<BodyStat, ValueRange>>(v, (JsonSerializerOptions)null) ?? new Dictionary<BodyStat, ValueRange>()
-                );
+                .IsRequired();
 
-            // Configure Mobility as JSON
-            builder.Property(r => r.Mobility)
+            builder.Property(r => r.JsonBodyStats)
+                .HasColumnName("bodyStats")
                 .HasColumnType("nvarchar(max)")
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                    v => JsonSerializer.Deserialize<Dictionary<MobilityType, int>>(v, (JsonSerializerOptions)null) ?? new Dictionary<MobilityType, int>()
-                );
+                .IsRequired();
 
-            // Configure Vulnerabilities as JSON
-            builder.Property(r => r.Vulnerabilities)
+            builder.Property(r => r.JsonVulnerabilities)
+                .HasColumnName("vulnerabilities")
                 .HasColumnType("nvarchar(max)")
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                    v => JsonSerializer.Deserialize<Dictionary<VulnerabilityType, double>>(v, (JsonSerializerOptions)null) ?? new Dictionary<VulnerabilityType, double>()
-                );
+                .IsRequired();
 
+            builder.Property(r => r.JsonMobility)
+                .HasColumnName("mobility")
+                .HasColumnType("nvarchar(max)")
+                .IsRequired();
+
+            builder.Property(r => r.JsonHierarchySystem)
+                .HasColumnName("hierarchySystem")
+                .HasColumnType("nvarchar(max)")
+                .IsRequired();
+
+            builder.Property(r => r.JsonSpeciualAbilities)
+                .HasColumnName("speciualAbilities")
+                .HasColumnType("nvarchar(max)")
+                .IsRequired();
+
+            // Indexes pro výkon
+            builder.HasIndex(r => r.RaceName).IsUnique();
+            builder.HasIndex(r => r.RaceCategory);
         }
     }
 }

@@ -1,44 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="HoL.Domain.Helpers.Dice">
+  <Class Name="HoL.Domain.Helpers.Dice" Collapsed="true">
     <Position X="0.75" Y="6.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAQAAAAAAAQACgAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Helpers\Dice.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="HoL.Domain.ValueObjects.SpecialAbilities">
+  <Class Name="HoL.Domain.ValueObjects.SpecialAbilities" Collapsed="true">
     <Position X="8.25" Y="2.75" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAEEAAAAAAAAAAAAAAAAACAAAAAIAAA=</HashCode>
       <FileName>ValueObjects\SpecialAbilities.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="HoL.Domain.Entities.Race">
-    <Position X="12.5" Y="5" Width="4" />
-    <TypeIdentifier>
-      <HashCode>gGACAAEEBAAAAQUgAAAIIACAAAIQACAAAAAAEAAAAAA=</HashCode>
-      <FileName>Entities\Race.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Conviction" />
-      <Property Name="Treasure" />
-      <Property Name="RaceCategory" />
-      <Property Name="BodyDimensins" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="BodyParts" />
-      <Property Name="SpecialAbilities" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyDimension">
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyDimension" Collapsed="true">
     <Position X="18.25" Y="2" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAAAAAIAAAEAAAQAAAAAABCAAABAAYAEQAAg=</HashCode>
+      <HashCode>AAAQAAAAAAIAAAAAAUACAQBAAAAAAAAAAAAAYAEQAAg=</HashCode>
       <FileName>ValueObjects\AnatomiObjects\BodyObjects\BodyDimension.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPart">
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPart" Collapsed="true">
     <Position X="8" Y="5" Width="3" />
     <TypeIdentifier>
       <HashCode>AAIABAAAAAIAAAAAAAAAEAYAAIAAgIAQAAAgwgAAAEA=</HashCode>
@@ -49,24 +32,24 @@
       <Property Name="Defense" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="HoL.Domain.ValueObjects.Treasure">
+  <Class Name="HoL.Domain.ValueObjects.Treasure" Collapsed="true">
     <Position X="18.25" Y="7" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAEkAAAAAAAAAAAAAACIAAAAAIAAAA=</HashCode>
+      <HashCode>AgIAAAAAABAAAAAEkAAAAEAAAAAAAAACIAAAAAIAAAA=</HashCode>
       <FileName>ValueObjects\Treasure.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="CurrencyGroup" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPartDefense">
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPartDefense" Collapsed="true">
     <Position X="3.75" Y="3.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>ACAQAAAAAAAAAAAAQAAAAAEAAAAAAAARAAAAAAAAAAA=</HashCode>
       <FileName>ValueObjects\AnatomiObjects\BodyObjects\BodyPartDefense.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPartAttack">
+  <Class Name="HoL.Domain.ValueObjects.Anatomi.Body.BodyPartAttack" Collapsed="true">
     <Position X="3.75" Y="6.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAABAAAAAAAAAAAgAAAAAAAAAAAAIAAggBA=</HashCode>
@@ -76,38 +59,55 @@
       <Property Name="DamageDice" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="HoL.Domain.Entities.CurencyEntities.CurrencyGroup">
+  <Class Name="HoL.Domain.Entities.CurencyEntities.CurrencyGroup" Collapsed="true">
     <Position X="23.5" Y="7" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAADAAAQAAAAAAAAAAAACAAAgAAAAAAAAAAAAAAAAEE=</HashCode>
+      <HashCode>AAADAAAQAAAAIAAAAAAACAAAgQAAAAAAAAAAAAAAAEE=</HashCode>
       <FileName>Entities\CurrencyEntities\CurrencyGroup.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Currencies" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="HoL.Domain.Entities.CurencyEntities.SingleCurrency">
+  <Class Name="HoL.Domain.Entities.CurencyEntities.SingleCurrency" Collapsed="true">
     <Position X="28.75" Y="7" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAACAAAgAAAAIAIEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\CurrencyEntities\SingleCurrency.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="HoL.Domain.Enums.ConvictionType">
+  <Class Name="HoL.Domain.Entities.Race" Collapsed="true">
+    <Position X="12.5" Y="5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>gGACAAEEBAAAAQUgAAAIIACAAAIQACAAAAAAEAAAAAA=</HashCode>
+      <FileName>Entities\Race.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RaceCategory" />
+      <Property Name="BodyDimensins" />
+      <Property Name="Conviction" />
+      <Property Name="Treasure" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="BodyParts" />
+      <Property Name="SpecialAbilities" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="HoL.Domain.Enums.ConvictionType" Collapsed="true">
     <Position X="15" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAIAAAAgAIAAAAAAE=</HashCode>
       <FileName>Enums\ConvictionType.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="HoL.Domain.Enums.RaceCategory">
+  <Enum Name="HoL.Domain.Enums.RaceCategory" Collapsed="true">
     <Position X="13" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAQAAAAAAIAgQAgBAAGQAAAAAQAAAASAAABAAAgIAA=</HashCode>
       <FileName>Enums\RaceCategory.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="HoL.Domain.Enums.BodyStat">
+  <Enum Name="HoL.Domain.Enums.BodyStat" Collapsed="true">
     <Position X="11" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEBAEAAAABAABBAAAAAAACAAAAAACA=</HashCode>

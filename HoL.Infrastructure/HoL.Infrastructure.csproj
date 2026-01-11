@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Repositories\ReadMe-Repository.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.00" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.00" />
@@ -18,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HoL.Contracts\HoL.Contracts.csproj" />
     <ProjectReference Include="..\HoL.Domain\HoL.Domain.csproj" />
   </ItemGroup>
 

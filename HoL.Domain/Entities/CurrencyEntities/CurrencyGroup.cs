@@ -108,8 +108,9 @@ namespace HoL.Domain.Entities.CurencyEntities
 
         public void SetId(int id)
         {
-            if(id <= 0)
+            if (id <= 0)
                 throw new ArgumentException("Id musí být kladné číslo.", nameof(id));
             Id = id;
         }
+    }
 }

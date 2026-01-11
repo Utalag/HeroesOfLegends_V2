@@ -11,10 +11,6 @@ namespace HoL.Domain.ValueObjects
     /// </remarks>
     public class Treasure
     {
-
-        //ToDo: unit testy
-
-
         /// <summary>
         /// Slovník mapující HierarchyLevel měny na množství mincí v dané denominaci.
         /// </summary>
@@ -27,6 +23,9 @@ namespace HoL.Domain.ValueObjects
         /// Instance měnového systému používaného v tomto pokladu.
         /// </summary>
         public CurrencyGroup CurrencyGroup { get; private set; }
+
+
+
 
         private Treasure()
         {

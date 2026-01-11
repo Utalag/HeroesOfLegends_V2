@@ -1,9 +1,9 @@
-﻿using HoL.Aplication.Handlers.Responses;
-using HoL.Contracts;
+﻿using System.Diagnostics;
+using HoL.Aplication.Handlers.Responses;
 using HoL.Domain.Enums.Logging;
 using HoL.Domain.LogMessages;
+using HoL.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System.Diagnostics;
 
 namespace HoL.Aplication.Handlers.Commands.RaceCommand.RemoveRace
 {
